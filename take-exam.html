@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام الامتحانات - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <style>
+    :root {
+      --physics-teal: #1a4f5c; 
+      --society-green: #bacb3f;
+    }
+
+    .tech-background {
+      background-color: #fdfdfd;
+      background-image: radial-gradient(var(--physics-teal) 1px, transparent 1px), radial-gradient(var(--physics-teal) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: 0 0, 20px 20px;
+      opacity: 0.9;
+    }
+
+    .exam-container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .exam-header {
+      background: var(--physics-teal);
+      color: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 25px rgba(26, 79, 92, 0.2);
+    }
+
+    .exam-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .timer-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 2px solid var(--society-green);
+      font-size: 1.2rem;
+      font-weight: bold;
+      font-family: monospace;
+      color: var(--society-green);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .question-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(26, 79, 92, 0.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      color: var(--physics-teal);
+      font-weight: bold;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .option-label {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: 0.3s;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .option-label:hover {
+      background: rgba(26, 79, 92, 0.05);
+      border-color: var(--physics-teal);
+    }
+
+    /* اخفاء الـ radio button الأصلي */
+    .option-label input[type="radio"] {
+      display: none;
+    }
+
+    /* تصميم الـ radio button المخصص */
+    .custom-radio {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--physics-teal);
+      display: inline-block;
+      position: relative;
+    }
+
+    .option-label input[type="radio"]:checked + .custom-radio::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--society-green);
+    }
+
+    .option-label input[type="radio"]:checked ~ .option-text {
+      font-weight: bold;
+      color: var(--physics-teal);
+    }
+    .option-label.selected {
+      background: rgba(186, 203, 63, 0.15);
+      border-color: var(--society-green);
+    }
+
+    .submit-exam-btn {
+      background: var(--physics-teal);
+      color: #fff;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    .submit-exam-btn:hover {
+      background: var(--society-green);
+      color: var(--physics-teal);
+    }
+  </style>
+</head>
+<body class="tech-background">
+
+  <nav class="user-nav" style="background: #fff; box-shadow: 0 2px 15px rgba(0,0,0,0.05);">
+    <div class="unav-right">
+      <a href="#" class="unav-logo" style="color: var(--physics-teal); pointer-events: none;">غ<span style="color: var(--society-green);">ي</span>ث</a>
+    </div>
+    <div class="unav-left">
+      <div style="font-family: 'Cairo'; font-weight: bold; color: var(--red); margin-left: 15px;">
+        <i class="fa-solid fa-triangle-exclamation"></i> احذر إغلاق الصفحة أثناء الامتحان
+      </div>
+    </div>
+  </nav>
+
+  <div class="exam-container">
+    <div id="loading-msg" style="text-align: center; color: var(--physics-teal); font-weight: bold; font-size: 1.2rem; margin-top: 50px;">
+      جاري تجهيز ورقة الامتحان... <i class="fa-solid fa-spinner fa-spin"></i>
+    </div>
+
+    <form id="exam-form" style="display: none;">
+      <div class="exam-header">
+        <div>
+          <h1 class="exam-title" id="display-exam-name">اسم الامتحان</h1>
+          <p style="margin: 5px 0 0 0; opacity: 0.8; font-size: 0.9rem;" id="display-exam-info">عدد الأسئلة: 0</p>
+        </div>
+        <div class="timer-box" id="timer-display">
+          <i class="fa-regular fa-clock"></i> <span id="time-left">00:00</span>
+        </div>
+      </div>
+
+      <div id="questions-container">
+        </div>
+
+      <button type="submit" id="submit-btn" class="submit-exam-btn">إنهاء وتسليم الامتحان <i class="fa-solid fa-paper-plane"></i></button>
+    </form>
+  </div>
+
+<footer class="footer" style="background: var(--physics-teal); color: #fff; padding: 20px; text-align: center; margin-top: 50px;">
+  <p style="font-family: 'Cairo'; margin: 0;">MHD Powered by جميع الحقوق محفوظة @2026</p>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<script>
+  let currentUserId = null;
+  let currentExamId = new URLSearchParams(window.location.search).get('id');
+  let examData = null;
+  let timerInterval;
+
+  // 1. التحقق من تسجيل الدخول
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      currentUserId = user.uid;
+      checkIfAlreadyTaken();
+    } else {
+      window.location.href = 'login.html';
+    }
+  });
+
+  // 2. التحقق لو الطالب امتحن قبل كده (عشان ميغشش ويمتحن تاني)
+  function checkIfAlreadyTaken() {
+    firebase.database().ref(`exam_results/${currentUserId}/${currentExamId}`).once('value').then(snap => {
+      if (snap.exists()) {
+        alert("لقد قمت بأداء هذا الامتحان من قبل. لا يمكنك الإعادة.");
+        window.location.href = 'exam-results.html';
+      } else {
+        loadExam();
+      }
+    });
+  }
+
+  // 3. جلب بيانات الامتحان
+  function loadExam() {
+    if (!currentExamId) {
+      alert("رابط الامتحان غير صحيح.");
+      window.location.href = 'dashboard.html';
+      return;
+    }
+
+    firebase.database().ref('exams/' + currentExamId).once('value').then((snapshot) => {
+      if (snapshot.exists()) {
+        examData = snapshot.val();
+        
+        // التأكد إن فيه أسئلة
+        if (!examData.questions || examData.questions.length === 0) {
+          alert("هذا الامتحان لا يحتوي على أسئلة بعد.");
+          window.location.href = 'dashboard.html';
+          return;
+        }
+
+        renderExam();
+      } else {
+        alert("الامتحان غير موجود.");
+        window.location.href = 'dashboard.html';
+      }
+    });
+  }
+
+  // 4. رسم الأسئلة على الشاشة
+  function renderExam() {
+    document.getElementById('display-exam-name').innerText = examData.name;
+    document.getElementById('display-exam-info').innerText = `عدد الأسئلة: ${examData.questions.length}`;
+    
+    const container = document.getElementById('questions-container');
+    container.innerHTML = '';
+
+    examData.questions.forEach((q, index) => {
+      const qCard = document.createElement('div');
+      qCard.className = 'question-card';
+      
+      let optionsHtml = '';
+      // نفترض إن الخيارات مصفوفة في الداتابيز
+      if(q.options && Array.isArray(q.options)) {
+        q.options.forEach((opt, optIndex) => {
+          optionsHtml += `
+            <label class="option-label" onclick="selectOption(this, 'q${index}')">
+              <input type="radio" name="q${index}" value="${opt}" required>
+              <span class="custom-radio"></span>
+              <span class="option-text">${opt}</span>
+            </label>
+          `;
+        });
+      }
+
+      qCard.innerHTML = `
+        <div class="question-text">${index + 1}. ${q.text}</div>
+        <div class="options-grid">
+          ${optionsHtml}
+        </div>
+      `;
+      container.appendChild(qCard);
+    });
+
+    document.getElementById('loading-msg').style.display = 'none';
+    document.getElementById('exam-form').style.display = 'block';
+
+    // بدء التايمر
+    startTimer(examData.durationMinutes || 30);
+  }
+
+  // تأثيرات اختيار الإجابة (تلوين الكارت)
+  function selectOption(labelElement, groupName) {
+    // إزالة التحديد من باقي الخيارات في نفس السؤال
+    const allLabels = labelElement.parentElement.querySelectorAll('.option-label');
+    allLabels.forEach(lbl => lbl.classList.remove('selected'));
+    
+    // إضافة التحديد للجديد
+    labelElement.classList.add('selected');
+  }
+
+  // 5. التايمر (العداد التنازلي)
+  function startTimer(minutes) {
+    let time = minutes * 60; // تحويل لثواني
+    const display = document.getElementById('time-left');
+
+    timerInterval = setInterval(() => {
+      let m = Math.floor(time / 60);
+      let s = time % 60;
+
+      m = m < 10 ? '0' + m : m;
+      s = s < 10 ? '0' + s : s;
+
+      display.innerText = `${m}:${s}`;
+
+      if (time <= 0) {
+        clearInterval(timerInterval);
+        alert("انتهى الوقت! سيتم تسليم إجاباتك الحالية تلقائياً.");
+        document.getElementById('exam-form').dispatchEvent(new Event('submit'));
+      }
+      
+      // تغيير لون التايمر للأحمر لو فاضل أقل من 5 دقايق
+      if(time <= 300) {
+        document.getElementById('timer-display').style.color = 'var(--red)';
+        document.getElementById('timer-display').style.borderColor = 'var(--red)';
+      }
+
+      time--;
+    }, 1000);
+  }
+
+  // 6. تسليم الامتحان والتصحيح التلقائي
+  document.getElementById('exam-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    clearInterval(timerInterval); // إيقاف التايمر
+    
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.innerText = "جاري التصحيح وإرسال النتيجة...";
+
+    let score = 0;
+    const total = examData.questions.length;
+
+    // استخراج الإجابات من الفورم
+    const formData = new FormData(this);
+    
+    examData.questions.forEach((q, index) => {
+      const studentAnswer = formData.get(`q${index}`);
+      // التصحيح: مقارنة إجابة الطالب بالإجابة الصحيحة المتسجلة في الداتابيز
+      if (studentAnswer === q.correctAnswer) {
+        score++;
+      }
+    });
+
+    const percentage = Math.round((score / total) * 100);
+
+    // حفظ النتيجة في فايربيس تحت مسار exam_results/userId/examId
+    firebase.database().ref(`exam_results/${currentUserId}/${currentExamId}`).set({
+      examName: examData.name,
+      score: score,
+      total: total,
+      percentage: percentage,
+      date: new Date().toLocaleDateString('ar-EG'),
+      timestamp: firebase.database.ServerValue.TIMESTAMP
+    }).then(() => {
+      // حفظ في المسار العام برضو عشان لو الأدمن عايز يشوف كل درجات الطلاب
+      firebase.database().ref(`all_exam_results/${currentExamId}/${currentUserId}`).set({
+        score: score,
+        percentage: percentage,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+      });
+
+      alert(`تم تسليم الامتحان! درجتك هي: ${score} من ${total} (${percentage}%)`);
+      // توجيه الطالب لصفحة نتائج الامتحانات
+      window.location.href = 'exam-results.html';
+    }).catch((error) => {
+      console.error(error);
+      alert("حدث خطأ أثناء حفظ النتيجة.");
+      submitBtn.disabled = false;
+      submitBtn.innerText = "إنهاء وتسليم الامتحان";
+    });
+  });
+
+  // تنبيه الطالب لو حاول يعمل Back أو Refresh بالغلط
+  window.addEventListener('beforeunload', function (e) {
+    if(document.getElementById('exam-form').style.display === 'block') {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+</script>
+</body>
+</html>

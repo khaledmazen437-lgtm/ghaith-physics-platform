@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محتوى الكورس - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <style>
+    :root {
+      --physics-teal: #1a4f5c; 
+      --society-green: #bacb3f;
+    }
+
+    .tech-background {
+      background-color: #fdfdfd;
+      background-image: radial-gradient(var(--physics-teal) 1px, transparent 1px), radial-gradient(var(--physics-teal) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: 0 0, 20px 20px;
+      opacity: 0.9;
+    }
+
+    .course-header-card {
+      background: var(--physics-teal);
+      color: #fff;
+      border-radius: 12px;
+      padding: 40px 30px;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(26, 79, 92, 0.2);
+    }
+
+    .course-header-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(186, 203, 63, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: var(--physics-teal);
+      margin-bottom: 20px;
+      font-weight: 900;
+      border-right: 4px solid var(--society-green);
+      padding-right: 10px;
+    }
+
+    .content-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid rgba(26, 79, 92, 0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(26, 79, 92, 0.1);
+      border-color: var(--society-green);
+    }
+
+    .content-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .icon-video { background: rgba(26, 79, 92, 0.1); color: var(--physics-teal); }
+    .icon-pdf { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+    .icon-task { background: rgba(186, 203, 63, 0.2); color: #8e9e1c; }
+
+    .content-card h3 { font-size: 1.1rem; color: var(--physics-teal); margin-bottom: 10px; }
+    .content-card p { font-size: 0.85rem; color: #718096; margin-bottom: 20px; flex-grow: 1; line-height: 1.6; }
+    
+    .content-btn {
+      text-align: center;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    .btn-play { background: var(--physics-teal); color: #fff; }
+    .btn-play:hover { background: #123842; }
+    
+    .btn-download { background: transparent; border: 2px solid #ef4444; color: #ef4444; }
+    .btn-download:hover { background: #ef4444; color: #fff; }
+
+    .btn-solve { background: var(--society-green); color: var(--physics-teal); }
+    .btn-solve:hover { background: #aab832; }
+
+  </style>
+</head>
+<body class="tech-background user-body">
+  
+  <nav class="user-nav" style="background: #fff; box-shadow: 0 2px 15px rgba(0,0,0,0.05);">
+    <div class="unav-right">
+      <a href="dashboard.html" class="unav-logo" style="color: var(--physics-teal);">غ<span style="color: var(--society-green);">ي</span>ث</a>
+    </div>
+    <div class="unav-left">
+      <div class="unav-avatar" id="user-avatar-display">أ</div>
+      <a href="dashboard.html" style="text-decoration: none; color: var(--physics-teal); background: rgba(26, 79, 92, 0.1); padding: 8px 15px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; margin-right: 15px;">العودة للوحة <i class="fa-solid fa-arrow-left"></i></a>
+    </div>
+  </nav>
+
+  <div class="user-container" style="max-width: 1100px; margin-top: 30px;">
+    
+    <div class="course-header-card">
+      <h1 id="display-course-title" style="font-size: 2rem; margin-bottom: 15px;">جاري تحميل محتوى الكورس...</h1>
+      <p id="display-course-desc" style="font-size: 1rem; opacity: 0.9; max-width: 800px; line-height: 1.8;">يرجى الانتظار بينما نقوم بجلب الدروس والملفات الخاصة بك.</p>
+    </div>
+
+    <h2 class="section-title">الدروس المسجلة</h2>
+    <div class="dash-grid" id="videos-grid" style="margin-bottom: 40px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+      <div style="color: var(--physics-teal);">جاري التحميل...</div>
+    </div>
+
+    <h2 class="section-title">الملازم والملفات (PDF)</h2>
+    <div class="dash-grid" id="pdfs-grid" style="margin-bottom: 40px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+      <div style="color: var(--physics-teal);">جاري التحميل...</div>
+    </div>
+
+    <h2 class="section-title">الواجبات والتكليفات</h2>
+    <div class="dash-grid" id="assignments-grid" style="margin-bottom: 40px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+      <div style="color: var(--physics-teal);">جاري التحميل...</div>
+    </div>
+
+  </div>
+
+<footer class="footer" style="position:relative;overflow:hidden; background: var(--physics-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
+  <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700; color: #fff;">
+      <span style="font-size: 2rem;">غ</span><span style="color:var(--society-green);">ي</span>ث
+    </div>
+    <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
+      <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; transition: 0.3s;"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.facebook.com/share/1M5jZVKKHY/" target="_blank" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; transition: 0.3s;"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://youtube.com/@mr.mustafazemetar" target="_blank" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; transition: 0.3s;"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+    <div style="width: 80%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+    <p style="font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px;">
+      💖 تم صنع هذه المنصة بهدف تهيئة الطالب لـ كامل جوانب الثانوية العامة 💖
+    </p>
+    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap;">
+      <span>&lt; Developed By &gt;</span>
+      <a href="https://www.facebook.com/share/18a8bJafwV/" target="_blank" style="color: var(--society-green); text-decoration: none; font-weight: bold;">Mazen Khaled</a>
+      <span>,</span>
+      <span style="color: var(--society-green); font-weight: bold;">Mohamed Zemitar</span>
+    </div>
+    <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+      MHD Powered by 
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<script>
+  firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    const userId = user.uid;
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get('courseId');
+
+    if (!courseId) {
+      alert("لم يتم تحديد الكورس!");
+      window.location.href = 'dashboard.html';
+      return;
+    }
+
+    
+    firebase.database().ref('users/' + userId).once('value').then(snap => {
+      if(snap.exists() && snap.val().name) {
+        document.getElementById('user-avatar-display').innerText = snap.val().name.charAt(0);
+      }
+    });
+
+    
+    firebase.database().ref(`enrolled_courses/${userId}/${courseId}`).once('value').then((snap) => {
+      if (!snap.exists()) {
+        alert("عفواً، لست مشتركاً في هذا الكورس.");
+        window.location.href = `course-details.html?id=${courseId}`;
+        return;
+      }
+
+      
+      firebase.database().ref(`courses/${courseId}`).once('value').then((courseSnap) => {
+        if(courseSnap.exists()) {
+          const course = courseSnap.val();
+          document.getElementById('display-course-title').innerText = course.name;
+          document.getElementById('display-course-desc').innerText = course.description || "استعد للبدء في التعلم!";
+
+          const videosGrid = document.getElementById('videos-grid');
+          const pdfsGrid = document.getElementById('pdfs-grid');
+          
+          videosGrid.innerHTML = '';
+          pdfsGrid.innerHTML = '';
+
+          let hasVideos = false;
+          let hasPdfs = false;
+
+          
+          if(course.videos) {
+            Object.keys(course.videos).forEach(videoKey => {
+              const video = course.videos[videoKey];
+              
+              
+              hasVideos = true;
+              videosGrid.innerHTML += `
+                <div class="content-card">
+                  <div class="content-icon icon-video"><i class="fa-solid fa-play"></i></div>
+                  <h3>${video.title || 'درس جديد'}</h3>
+                  <p>${video.duration ? 'المدة: ' + video.duration : 'انقر للمشاهدة'}</p>
+                  <a href="player.html?courseId=${courseId}" class="content-btn btn-play">شاهد الآن <i class="fa-solid fa-chevron-left"></i></a>
+                </div>
+              `;
+            
+              if(video.pdfUrl) {
+                hasPdfs = true;
+                pdfsGrid.innerHTML += `
+                  <div class="content-card">
+                    <div class="content-icon icon-pdf"><i class="fa-solid fa-file-pdf"></i></div>
+                    <h3>ملزمة: ${video.title}</h3>
+                    <p>قم بتحميل الملف بصيغة PDF للمذاكرة.</p>
+                    <a href="${video.pdfUrl}" target="_blank" class="content-btn btn-download">تحميل الملف <i class="fa-solid fa-download"></i></a>
+                  </div>
+                `;
+              }
+            });
+          }
+
+          if(!hasVideos) videosGrid.innerHTML = '<div style="color: var(--physics-teal); font-weight: bold;">لا توجد دروس مسجلة حالياً.</div>';
+          if(!hasPdfs) pdfsGrid.innerHTML = '<div style="color: var(--physics-teal); font-weight: bold;">لا توجد ملفات أو ملازم مرفقة.</div>';
+        }
+      });
+
+      
+      firebase.database().ref('assignments').orderByChild('courseId').equalTo(courseId).once('value').then((assignSnap) => {
+        const assignmentsGrid = document.getElementById('assignments-grid');
+        assignmentsGrid.innerHTML = '';
+
+        if(assignSnap.exists()) {
+          assignSnap.forEach((childSnap) => {
+            const assign = childSnap.val();
+            const assignId = childSnap.key;
+
+            assignmentsGrid.innerHTML += `
+              <div class="content-card">
+                <div class="content-icon icon-task"><i class="fa-solid fa-pen-to-square"></i></div>
+                <h3>${assign.title}</h3>
+                <p>${assign.description ? assign.description.substring(0, 50) + '...' : 'واجب جديد يحتاج للحل.'}</p>
+                <a href="solve-assignment.html?id=${assignId}" class="content-btn btn-solve">ابدأ الحل <i class="fa-solid fa-pencil"></i></a>
+              </div>
+            `;
+          });
+        } else {
+          assignmentsGrid.innerHTML = '<div style="color: var(--physics-teal); font-weight: bold;">لا توجد واجبات مطلوبة حالياً. استمتع بوقتك!</div>';
+        }
+      });
+
+    });
+  });
+</script>
+</body>
+</html>

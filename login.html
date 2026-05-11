@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Josefin+Sans:wght@400;700;900&family=Montserrat:wght@400;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="auth-page">
+  <header class="auth-header">
+    <a href="index.html" class="auth-logo">غ<span>ي</span>ث</a>
+    <div class="auth-nav">
+      <button id="theme-btn" class="auth-nav-link" style="background:transparent;border:none;font-size:1.5rem;cursor:pointer;" onclick="toggleTheme()">🌙</button>
+      <a href="register.html" class="auth-nav-link">انشئ حسابك </a>
+      <a href="login.html" class="auth-nav-btn" style="background:var(--lime);color:var(--text);">تسجيل الدخول </a>
+    </div>
+  </header>
+
+  <div class="auth-form-side">
+    <div class="auth-form-wrap" style="max-width: 450px;">
+      <h2 class="auth-title">مرحباً بك مجدداً </h2>
+      
+      <div id="error-message" style="display: none; background: #ef444420; color: var(--red); padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; text-align: right; border: 1px solid var(--red);"></div>
+
+      <form id="login-form">
+        <div class="auth-input-group">
+          <label>البريد الإلكتروني أو كود الطالب 📧</label>
+          <input type="text" id="login-email" required placeholder="أدخل بريدك الإلكتروني أو كودك">
+        </div>
+        
+        <div class="auth-input-group">
+          <label>كلمة السر 🔒</label>
+          <input type="password" id="login-password" required placeholder="أدخل كلمة السر">
+        </div>
+        
+        <div style="text-align:left; margin-bottom: 20px;">
+          <a href="#" style="color:var(--red); font-family:'Cairo',sans-serif; text-decoration:none; font-weight:700;">نسيت كلمة السر؟</a>
+        </div>
+        
+        <button type="submit" id="login-btn" class="auth-submit">تسجيل الدخول</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="auth-visual-side">
+    <div class="auth-visual-bg">جاهز للفيزياء؟</div>
+    <svg class="auth-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M45.7,-76.3C58.9,-69.3,69.1,-55.3,77.7,-40.8C86.3,-26.3,93.4,-11.3,91.8,2.7C90.2,16.7,80,29.7,70.5,41.8C61,53.9,52.2,65.1,40.4,72.4C28.6,79.7,14.3,83.1,-0.1,83.3C-14.5,83.5,-29,80.5,-41.8,73.4C-54.6,66.3,-65.7,55.1,-73.4,41.9C-81.1,28.7,-85.4,13.5,-84.8,-1.4C-84.2,-16.3,-78.7,-30.9,-70.2,-42.6C-61.7,-54.3,-50.2,-63.1,-37.4,-69.6C-24.6,-76.1,-12.3,-80.3,1.6,-82.9C15.5,-85.5,31,-86.5,45.7,-76.3Z" transform="translate(100 100)" />
+    </svg>
+    <img src="WhatsApp Image 2026-05-08 at 4.03.54 AM.jpeg" class="auth-img" alt="Teacher">
+  </div>
+</div>
+
+<footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
+  <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
+      <span style="font-size: 2rem;">غ</span><span style="color:var(--red);">ي</span>ث
+    </div>
+    <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
+      <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://www.facebook.com/share/1M5jZVKKHY/" target="_blank" style="width: 40px; height: 40px; background: #1877f2; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://youtube.com/@mr.mustafazemetar" target="_blank" style="width: 40px; height: 40px; background: #ff0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+      <a href="#" style="width: 40px; height: 40px; background: #3b5998; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-solid fa-users"></i>
+      </a>
+    </div>
+    <div style="width: 80%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+    <p style="font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px;">
+      💖 تم صنع هذه المنصة بهدف تهيئة الطالب لـ كامل جوانب الثانوية العامة و ما بعدها 💖
+    </p>
+    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap;">
+      <span>&lt; Developed By &gt;</span>
+      <a href="https://www.facebook.com/share/18a8bJafwV/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Mazen Khaled</a>
+      <span>,</span>
+      <span style="color: #38bdf8; font-weight: bold;">Mohamed Zemitar</span>
+      <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
+    </div>
+    <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+      MHD Powered by
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    const nt = t === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nt);
+    document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
+    localStorage.setItem('ghaith_theme', nt);
+  }
+  (function () { 
+    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
+    document.documentElement.setAttribute('data-theme', t); 
+    setTimeout(() => { 
+      const b = document.getElementById('theme-btn'); 
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
+    }, 100); 
+  })();
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<script>
+ 
+  const urlParams = new URLSearchParams(window.location.search);
+  if(urlParams.get('logout') === 'true') {
+      firebase.auth().signOut();
+  }
+
+  // التحقق لو الطالب مسجل دخول أصلاً يوديه للداش بورد أوتوماتيك
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user && urlParams.get('logout') !== 'true') {
+      window.location.href = 'dashboard.html';
+    }
+  });
+
+  document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const rawEmailOrCode = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errorMsgDiv = document.getElementById('error-message');
+    const loginBtn = document.getElementById('login-btn');
+
+    // خدعة الأكواد: لو المدخل مفيش فيه @ بنعتبره كود ونضيفله دومين المنصة الوهمي
+    let email = rawEmailOrCode;
+    if (!email.includes('@')) {
+      email = email + '@ghaith.com';
+    }
+
+    loginBtn.innerText = 'جاري تسجيل الدخول...';
+    loginBtn.disabled = true;
+    errorMsgDiv.style.display = 'none';
+
+    // عملية تسجيل الدخول بفايربيس
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        window.location.href = 'dashboard.html';
+      })
+      .catch((error) => {
+        loginBtn.innerText = 'تسجيل الدخول';
+        loginBtn.disabled = false;
+
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        
+        let friendlyMessage = 'حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى.';
+        
+        // ترجمة رسائل فايربيس للعربي وتغطية التحديث الأمني الأخير
+        if (errorCode === 'auth/invalid-credential' || errorMessage.includes('INVALID_LOGIN_CREDENTIALS')) {
+          friendlyMessage = 'بيانات الدخول غير صحيحة، يرجى التأكد من البريد وكلمة السر.';
+        } else if (errorCode === 'auth/user-not-found') {
+          friendlyMessage = 'هذا الحساب غير مسجل لدينا، تأكد من بريدك أو كودك.';
+        } else if (errorCode === 'auth/wrong-password') {
+          friendlyMessage = 'كلمة السر غير صحيحة.';
+        } else if (errorCode === 'auth/invalid-email') {
+          friendlyMessage = 'صيغة البريد الإلكتروني غير صحيحة.';
+        } else if (errorCode === 'auth/too-many-requests') {
+          friendlyMessage = 'محاولات كثيرة خاطئة، يرجى المحاولة لاحقاً.';
+        }
+
+        errorMsgDiv.innerText = friendlyMessage;
+        errorMsgDiv.style.display = 'block';
+      });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Josefin+Sans:wght@400;700;900&family=Montserrat:wght@400;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="dash-layout">
+  <aside class="dash-sidebar" id="sidebar">
+    <a href="index.html" class="dash-logo">غ<span>ي</span>ث</a>
+    <nav class="dash-nav">
+      <a href="dashboard.html" class="dash-nav-item active">
+        <span class="dash-nav-icon"></span> الرئيسية
+      </a>
+      <a href="courses.html" class="dash-nav-item">
+        <span class="dash-nav-icon"></span> كورساتي
+      </a>
+      <a href="assignments.html" class="dash-nav-item">
+        <span class="dash-nav-icon"></span> الواجبات
+      </a>
+      <a href="evaluations.html" class="dash-nav-item">
+        <span class="dash-nav-icon"></span> تقييمي
+      </a>
+      <a href="profile.html" class="dash-nav-item">
+        <span class="dash-nav-icon"></span> ملفي الشخصي
+      </a>
+    </nav>
+  </aside>
+
+  <main class="dash-main" style="display: flex; flex-direction: column; min-height: 100vh;">
+    <header class="dash-topbar">
+      <button class="dash-menu-btn" onclick="toggleSidebar()">☰</button>
+      <div style="flex:1"></div>
+      
+      <div class="dash-topbar-right">
+        <button id="theme-btn" style="background:transparent;border:none;font-size:1.5rem;cursor:pointer;" onclick="toggleTheme()">🌙</button>
+        <div class="dash-user-profile">
+          <div class="dash-user-info" style="text-align: left;">
+            <h4 id="user-name-display">أحمد محمد</h4>
+            <p id="user-grade-display">طالب - الصف الثالث</p>
+          </div>
+          <div class="dash-user-avatar" id="user-avatar-display">أ</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="dash-content" style="flex: 1;">
+      
+      <div class="dash-banner">
+        <div class="dash-banner-text">
+          <h1 style="font-size: 1.5rem;">أهلاً بك يا بطل!</h1>
+          <p class="motivation-text" style="font-size: 0.9rem; line-height: 1.6; margin-top: 10px; color: var(--text2);">"رحلة الألف ميل تبدأ بخطوة، والفيزياء هي بوابتك لفهم الكون. استمر، حلمك يستحق التعب!"</p>
+        </div>
+      </div>
+
+      <h2 class="dash-section-title"><span></span> كورساتي الحالية</h2>
+      <div class="dash-grid" id="dashboard-courses-grid">
+        <div class="dash-card">
+          <div class="dash-card-icon"></div>
+          <h3>جاري تحميل الكورسات...</h3>
+          <p>يرجى الانتظار قليلاً.</p>
+        </div>
+      </div>
+
+      <h2 class="dash-section-title"><span></span> الامتحانات القادمة</h2>
+      <div class="dash-grid" id="dashboard-exams-grid">
+        <div class="dash-card">
+          <div class="dash-card-icon" style="color:var(--red); background:rgba(216, 229, 138, 0.1);">📝</div>
+          <h3>جاري تحميل الامتحانات...</h3>
+          <p>يتم الآن جلب الامتحانات من قاعدة البيانات.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; border-radius: 12px; width: 100%;">
+      <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+        <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:2.5rem; font-weight:700;">
+          <span style="font-size: 1.8rem;">غ</span><span style="color:var(--red);">ي</span>ث
+        </div>
+        <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
+          <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+          <a href="https://www.facebook.com/share/1M5jZVKKHY/" target="_blank" style="width: 40px; height: 40px; background: #1877f2; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://youtube.com/@mr.mustafazemetar" target="_blank" style="width: 40px; height: 40px; background: #ff0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          <a href="#" style="width: 40px; height: 40px; background: #3b5998; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+            <i class="fa-solid fa-users"></i>
+          </a>
+        </div>
+        <div style="width: 80%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+        <p style="font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px;">
+          💖 تم صنع هذه المنصة بهدف تهيئة الطالب لـ كامل جوانب الثانوية العامة و ما بعدها 💖
+        </p>
+        <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap;">
+          <span>&lt; Developed By &gt;</span>
+          <a href="https://www.facebook.com/share/18a8bJafwV/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Mazen Khaled</a>
+          <span>,</span>
+          <span style="color: #38bdf8; font-weight: bold;">Mohamed Zemitar</span>
+          <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
+        </div>
+        <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+          MHD Powered by 
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Theme Toggle Logic
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    const nt = t === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nt);
+    document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
+    localStorage.setItem('ghaith_theme', nt);
+  }
+  (function () { 
+    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
+    document.documentElement.setAttribute('data-theme', t); 
+    setTimeout(() => { 
+      const b = document.getElementById('theme-btn'); 
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
+    }, 100); 
+  })();
+
+  // Sidebar Toggle Logic for Mobile
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<script>
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      const userId = user.uid;
+
+      // 1. جلب بيانات الطالب (الاسم والصف والصورة)
+      firebase.database().ref('users/' + userId).once('value').then((snapshot) => {
+        if(snapshot.exists()){
+          const userData = snapshot.val();
+          document.getElementById('user-name-display').innerText = userData.name || 'طالب غيث';
+          document.getElementById('user-grade-display').innerText = userData.grade || 'طالب - مسجل';
+          if(userData.name) {
+             document.getElementById('user-avatar-display').innerText = userData.name.charAt(0);
+          }
+        }
+      });
+
+      // 2. جلب الكورسات المشترك فيها لعرضها في الداش بورد
+      const coursesGrid = document.getElementById('dashboard-courses-grid');
+      firebase.database().ref('enrolled_courses/' + userId).on('value', (snapshot) => {
+        coursesGrid.innerHTML = ''; // تفريغ الكروت الافتراضية
+        if (snapshot.exists()) {
+          snapshot.forEach((childSnapshot) => {
+            const courseId = childSnapshot.key;
+            firebase.database().ref('courses/' + courseId).once('value').then((courseSnap) => {
+              if(courseSnap.exists()){
+                const course = courseSnap.val();
+                
+                // حقن كارت الكورس
+                // زرار "استكمال الكورس" يوجه الطالب لصفحة محتوى الكورس اللي هتعرض الدروس
+                const courseCard = `
+                  <div class="dash-card">
+                    <div class="dash-card-icon"></div>
+                    <h3>${course.name}</h3>
+                    <p>${course.description ? course.description.substring(0, 50) + '...' : 'شرح تفصيلي للكورس.'}</p>
+                    <div style="margin-bottom: 15px;">
+                      <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text2); margin-bottom:5px;">
+                        <span>مكتمل</span>
+                        <span>0%</span>
+                      </div>
+                      <div class="dash-progress-wrap" style="background:var(--border);">
+                        <div class="dash-progress-bar" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <a href="course-content.html?courseId=${courseId}" class="dash-card-btn primary">استكمال الكورس</a>
+                  </div>
+                `;
+                coursesGrid.innerHTML += courseCard;
+              }
+            });
+          });
+        } else {
+          // كارت شيك يوجه الطالب لصفحة courses.html لو مش مشترك في أي كورس
+          coursesGrid.innerHTML = `
+            <div class="dash-card" style="grid-column: 1/-1; text-align: center; padding: 40px 20px;">
+              <div class="dash-card-icon" style="margin: 0 auto 15px; color: var(--gold); background: rgba(216, 229, 138, 0.1);">🛒</div>
+              <h3 style="font-size: 1.2rem; margin-bottom: 10px;">لست مشتركاً في أي كورس حالياً</h3>
+              <p style="color: var(--text2); margin-bottom: 20px;">استكشف الكورسات المتاحة وانضم إلينا لتبدأ رحلتك!</p>
+              <a href="courses.html" class="dash-card-btn primary" style="display: inline-block; padding: 10px 30px;">تصفح الكورسات</a>
+            </div>
+          `;
+        }
+      });
+
+      // 3. جلب الامتحانات القادمة من قاعدة البيانات
+      const examsGrid = document.getElementById('dashboard-exams-grid');
+      firebase.database().ref('exams').on('value', (snapshot) => {
+        examsGrid.innerHTML = ''; // تفريغ
+        if (snapshot.exists()) {
+          snapshot.forEach((childSnapshot) => {
+            const exam = childSnapshot.val();
+            const examId = childSnapshot.key;
+            
+            // حقن كارت الامتحان بنفس تصميمك
+            const examCard = `
+              <div class="dash-card">
+                <div class="dash-card-icon" style="color:var(--red); background:rgba(216, 229, 138, 0.1);">📝</div>
+                <h3>${exam.name}</h3>
+                <p>امتحان متاح الآن. استعد جيداً قبل البدء.</p>
+                <div style="display:flex; gap:10px; margin-bottom:15px;">
+                  <span style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:5px; font-size:0.8rem; color:var(--text);">${exam.durationMinutes} دقيقة</span>
+                </div>
+                <a href="take-exam.html?id=${examId}" class="dash-card-btn">ابدأ الامتحان الآن</a>
+              </div>
+            `;
+            examsGrid.innerHTML += examCard;
+          });
+        } else {
+          examsGrid.innerHTML = '<div class="dash-card" style="grid-column: 1/-1; text-align: center;"><p>لا توجد امتحانات قادمة حالياً. استمتع بوقتك!</p></div>';
+        }
+      });
+
+    } else {
+      // تحويل الطالب لصفحة الدخول لو مش مسجل
+      // window.location.href = 'login.html';
+    }
+  });
+</script>
+</body>
+</html>

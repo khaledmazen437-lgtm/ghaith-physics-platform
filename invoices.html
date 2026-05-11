@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>الفواتير - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <!-- إضافة مكتبة الأيقونات Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="user-body">
+  <nav class="user-nav">
+    <div class="unav-right">
+      <a href="index.html" class="unav-logo">غ<span>ي</span>ث</a>
+      <div class="unav-theme-toggle" onclick="toggleTheme()">
+        <span class="utt-sun">☀️</span>
+        <span class="utt-moon">🌙</span>
+      </div>
+    </div>
+    <div class="unav-left">
+      <button class="unav-bell">🔔</button>
+      <div class="unav-avatar"><img src="https://via.placeholder.com/45" alt="User"></div>
+    </div>
+  </nav>
+
+  <div class="user-top-band"></div>
+
+  <div class="user-container">
+    <div class="user-badge">
+      <span>ملف المستخدم</span>
+      <div class="ub-icon"></div>
+    </div>
+
+    <div class="user-grid">
+      <!-- محتوى الفواتير -->
+      <div class="user-content" style="flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 20px;">
+        
+  
+        <div id="empty-state" class="empty-state" style="width: 100%;">
+          <span class="es-text">ليس لديك أي فواتير حالياً!</span>
+          <span class="es-icon" style="color: var(--text3);"></span>
+        </div>
+
+        
+        <div id="invoices-container" style="display: none; width: 100%; overflow-x: auto;">
+          <h2 style="font-size: 1.2rem; color: var(--text); margin-bottom: 20px;">سجل الفواتير وعمليات الشحن</h2>
+          <table style="width: 100%; border-collapse: collapse; text-align: right; min-width: 500px;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border); color: var(--text3);">
+                <th style="padding: 10px;">رقم الفاتورة</th>
+                <th style="padding: 10px;">التفاصيل / الكود</th>
+                <th style="padding: 10px;">القيمة</th>
+                <th style="padding: 10px;">التاريخ</th>
+                <th style="padding: 10px;">الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="invoices-tbody">
+              
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="user-menu">
+        <a href="profile.html" class="um-item">ملف المستخدم</a>
+        <a href="recharge.html" class="um-item">شحن أكواد</a>
+        <a href="courses.html" class="um-item">كورساتي</a>
+        <a href="security.html" class="um-item">الأمان و تاريخ تسجيل الدخول</a>
+        <a href="views.html" class="um-item">تفاصيل المشاهدات</a>
+        <a href="invoices.html" class="um-item active">الفواتير</a>
+        <a href="subscriptions.html" class="um-item">الاشتراكات</a>
+        <a href="exam-results.html" class="um-item">نتائج الامتحانات</a>
+        <a href="assignment-results.html" class="um-item">نتائج الواجب</a>
+      </div>
+    </div>
+  </div>
+
+<!-- Footer -->
+<footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
+  <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
+      <span style="font-size: 2rem;">غ</span><span style="color:var(--red);">ي</span>ث
+    </div>
+    
+    <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
+      <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://www.facebook.com/share/1M5jZVKKHY/" target="_blank" style="width: 40px; height: 40px; background: #1877f2; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://youtube.com/@mr.mustafazemetar" target="_blank" style="width: 40px; height: 40px; background: #ff0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+      <a href="#" style="width: 40px; height: 40px; background: #3b5998; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-solid fa-users"></i>
+      </a>
+    </div>
+    <div style="width: 80%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+    <p style="font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px;">
+      💖 تم صنع هذه المنصة بهدف تهيئة الطالب لـ كامل جوانب الثانوية العامة و ما بعدها 💖
+    </p>
+    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap;">
+      <span>&lt; Developed By &gt;</span>
+      <a href="https://www.facebook.com/share/18a8bJafwV/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Mazen Khaled</a>
+      <span>,</span>
+      <span style="color: #38bdf8; font-weight: bold;">Mohamed Zemitar</span>
+      <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
+    </div>
+    <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+      MHD Powered by 
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    const nt = t === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nt);
+    localStorage.setItem('ghaith_theme', nt);
+  }
+  (function () { 
+    const t = localStorage.getItem('ghaith_theme') || 'light'; 
+    document.documentElement.setAttribute('data-theme', t); 
+  })();
+</script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<!-- Firebase Invoices Logic -->
+<script>
+  firebase.auth().onAuthStateChanged((user) => {
+    const emptyState = document.getElementById('empty-state');
+    const invoicesContainer = document.getElementById('invoices-container');
+    const tbody = document.getElementById('invoices-tbody');
+
+    if (user) {
+      const userId = user.uid;
+      
+      // مسار قاعدة البيانات الخاص بفواتير الطالب
+      const dbRef = firebase.database().ref('invoices/' + userId);
+
+      dbRef.on('value', (snapshot) => {
+        if (snapshot.exists()) {
+          // إخفاء الـ Empty State وإظهار الجدول
+          emptyState.style.display = 'none';
+          invoicesContainer.style.display = 'block';
+          tbody.innerHTML = ''; // تفريغ الجدول القديم
+
+          snapshot.forEach((childSnapshot) => {
+            const data = childSnapshot.val();
+            const invoiceId = childSnapshot.key.substring(1, 8).toUpperCase(); // توليد رقم فاتورة وهمي من الـ ID للطباعة
+            
+            // تحديد حالة الدفع ولونها
+            const isPaid = data.status === 'paid' || data.status === 'ناجح' || true; // نفترض إنها مدفوعة دايماً لو اتسجلت
+            const statusColor = isPaid ? 'var(--green)' : 'var(--red)';
+            const statusBg = isPaid ? '#10b98120' : '#ef444420';
+            const statusText = isPaid ? 'مكتمل' : 'معلق';
+
+            const row = `
+              <tr style="border-bottom: 1px solid var(--border); color: var(--text);">
+                <td style="padding: 15px 10px; font-family: monospace;">#INV-${invoiceId}</td>
+                <td style="padding: 15px 10px;">${data.description || 'شحن كود أو شراء كورس'}</td>
+                <td style="padding: 15px 10px; font-weight: bold; color: var(--text);">${data.amount || '0'} ج.م</td>
+                <td style="padding: 15px 10px;">${data.date || '---'}</td>
+                <td style="padding: 15px 10px;">
+                  <span style="padding: 5px 10px; border-radius: 4px; font-size: 0.85rem; background: ${statusBg}; color: ${statusColor}; font-weight: 600;">
+                    ${statusText}
+                  </span>
+                </td>
+              </tr>
+            `;
+            tbody.innerHTML += row;
+          });
+        } else {
+          // مفيش بيانات
+          emptyState.style.display = 'flex';
+          invoicesContainer.style.display = 'none';
+        }
+      });
+    } else {
+      // الطالب مش مسجل دخول
+      emptyState.style.display = 'flex';
+      invoicesContainer.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

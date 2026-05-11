@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الواجبات - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Josefin+Sans:wght@400;700;900&family=Montserrat:wght@400;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="dash-layout">
+  
+  <aside class="dash-sidebar" id="sidebar">
+    <a href="index.html" class="dash-logo">غ<span>ي</span>ث</a>
+    <nav class="dash-nav">
+      <a href="dashboard.html" class="dash-nav-item">
+        <span class="dash-nav-icon"></span> الرئيسية
+      </a>
+      <a href="courses.html" class="dash-nav-item">
+        <span class="dash-nav-icon"></span> كورساتي
+      </a>
+      <a href="assignments.html" class="dash-nav-item active">
+        <span class="dash-nav-icon"></span> الواجبات
+      </a>
+      <a href="evaluations.html" class="dash-nav-item">
+        <span class="dash-nav-icon"></span> تقييمي
+      </a>
+      <a href="profile.html" class="dash-nav-item">
+        <span class="dash-nav-icon"></span> ملفي الشخصي
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="dash-main">
+    <!-- Topbar -->
+    <header class="dash-topbar">
+      <button class="dash-menu-btn" onclick="toggleSidebar()">☰</button>
+      <div style="flex:1"></div>
+      
+      <div class="dash-topbar-right">
+        <button id="theme-btn" style="background:transparent;border:none;font-size:1.5rem;cursor:pointer;" onclick="toggleTheme()">🌙</button>
+        <div class="dash-user-profile">
+          <div class="dash-user-info" style="text-align: left;">
+            <h4 id="user-name-display">أحمد محمد</h4>
+            <p id="user-grade-display">طالب - الصف الثالث</p>
+          </div>
+          <div class="dash-user-avatar" id="user-avatar-display">أ</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <div class="dash-content" style="min-height: calc(100vh - 100px); display: flex; flex-direction: column;">
+      
+      <!-- Welcome Banner -->
+      <div class="dash-banner">
+        <div class="dash-banner-text">
+          <h1 style="font-size: 1.5rem;">واجباتي</h1>
+          <p class="motivation-text" style="font-size: 0.9rem; line-height: 1.6; margin-top: 10px; color: var(--text2);">"التدريب المستمر هو المفتاح للعبقرية. أنجز واجباتك اليوم لترتاح غداً!"</p>
+        </div>
+      </div>
+
+      
+      <div class="dash-grid" id="assignments-grid">
+      
+        <div class="dash-card">
+          <div class="dash-card-icon" style="color:var(--red); background:rgba(177, 195, 55, 0.1);">📋</div>
+          <h3 style="font-size: 1.1rem;">جاري تحميل الواجبات...</h3>
+          <p style="font-size: 0.85rem; color: var(--text2); margin-bottom: 15px;">يرجى الانتظار بينما نحضر لك أحدث الواجبات.</p>
+        </div>
+      </div>
+
+      
+      <div style="flex: 1;"></div>
+
+      
+      <footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: 40px; border-radius: 12px; width: 100%;">
+        <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+          <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:2.5rem; font-weight:700;">
+            <span style="font-size: 1.8rem;">غ</span><span style="color:var(--red);">ي</span>ث
+          </div>
+          <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
+            <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="https://www.facebook.com/share/1M5jZVKKHY/" target="_blank" style="width: 40px; height: 40px; background: #1877f2; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://youtube.com/@mr.mustafazemetar" target="_blank" style="width: 40px; height: 40px; background: #ff0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="#" style="width: 40px; height: 40px; background: #3b5998; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+              <i class="fa-solid fa-users"></i>
+            </a>
+          </div>
+          <div style="width: 80%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+          <p style="font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px;">
+            💖 تم صنع هذه المنصة بهدف تهيئة الطالب لـ كامل جوانب الثانوية العامة و ما بعدها 💖
+          </p>
+          <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap;">
+            <span>&lt; Developed By &gt;</span>
+            <a href="https://www.facebook.com/share/18a8bJafwV/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Mazen Khaled</a>
+            <span>,</span>
+            <span style="color: #38bdf8; font-weight: bold;">Mohamed Zemitar</span>
+            <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
+          </div>
+          <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+            MHD Powered by 
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // Theme Toggle Logic
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    const nt = t === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nt);
+    document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
+    localStorage.setItem('ghaith_theme', nt);
+  }
+  (function () { 
+    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
+    document.documentElement.setAttribute('data-theme', t); 
+    setTimeout(() => { 
+      const b = document.getElementById('theme-btn'); 
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
+    }, 100); 
+  })();
+
+  // Sidebar Toggle Logic for Mobile
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+</script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<!-- Firebase Assignments Fetching Logic -->
+<script>
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // 1. جلب بيانات المستخدم لعرض اسمه في الهيدر (اختياري)
+      firebase.database().ref('users/' + user.uid).once('value').then((snapshot) => {
+        if(snapshot.exists()){
+          const userData = snapshot.val();
+          document.getElementById('user-name-display').innerText = userData.name || 'طالب';
+          document.getElementById('user-grade-display').innerText = userData.grade || 'طالب منصة غيث';
+          if(userData.name) {
+             document.getElementById('user-avatar-display').innerText = userData.name.charAt(0);
+          }
+        }
+      });
+
+      // 2. جلب الواجبات من قاعدة البيانات
+      const grid = document.getElementById('assignments-grid');
+      firebase.database().ref('assignments').on('value', (snapshot) => {
+        if(snapshot.exists()) {
+          grid.innerHTML = ''; // تفريغ البطاقات الافتراضية
+          snapshot.forEach((childSnapshot) => {
+            const assignment = childSnapshot.val();
+            const assignmentId = childSnapshot.key;
+            
+            // تصميم كارت الواجب زي ما إنت كنت عامله
+            const cardHTML = `
+              <div class="dash-card">
+                <div class="dash-card-icon" style="color:var(--red); background:rgba(177, 195, 55, 0.1);">📋</div>
+                <h3 style="font-size: 1.1rem;">${assignment.title}</h3>
+                <p style="font-size: 0.85rem; color: var(--text2); margin-bottom: 15px;">${assignment.description}</p>
+                <a href="solve-assignment.html?id=${assignmentId}" class="dash-card-btn primary">ابدأ الحل</a>
+              </div>
+            `;
+            grid.innerHTML += cardHTML;
+          });
+        } else {
+          // لو مفيش واجبات في الداتابيز
+          grid.innerHTML = `
+            <div class="dash-card" style="grid-column: 1 / -1; text-align: center;">
+              <div class="dash-card-icon" style="color:var(--gold); background:rgba(27, 194, 180, 0.1); margin: 0 auto 10px;">✅</div>
+              <h3 style="font-size: 1.1rem;">لا توجد واجبات حالياً</h3>
+              <p style="font-size: 0.85rem; color: var(--text2);">لقد أنجزت كل مهامك، استمتع بوقتك!</p>
+            </div>
+          `;
+        }
+      });
+    } else {
+      // لو مش مسجل دخول، حوله لصفحة الدخول
+      // window.location.href = 'login.html'; 
+    }
+  });
+</script>
+</body>
+</html>

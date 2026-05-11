@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>انشاء حساب - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Josefin+Sans:wght@400;700;900&family=Montserrat:wght@400;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <!-- إضافة مكتبة الأيقونات Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="auth-page">
+  <!-- Header -->
+  <header class="auth-header">
+    <a href="index.html" class="auth-logo">غ<span>ي</span>ث</a>
+    <div class="auth-nav">
+      <button id="theme-btn" class="auth-nav-link" style="background:transparent;border:none;font-size:1.5rem;cursor:pointer;" onclick="toggleTheme()">🌙</button>
+      <a href="login.html" class="auth-nav-link">تسجيل الدخول </a>
+      <a href="register.html" class="auth-nav-btn">انشئ حسابك </a>
+    </div>
+  </header>
+
+  <!-- Form Side -->
+  <div class="auth-form-side">
+    <div class="auth-form-wrap">
+      
+      <!-- رسالة التنبيه (نجاح أو خطأ) مخفية افتراضياً -->
+      <div id="reg-msg" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; text-align: center;"></div>
+
+      <form id="register-form">
+        <div class="auth-row">
+          <div class="auth-input-group">
+            <label>الاسم الأول 👤</label>
+            <input type="text" id="reg-fname" required>
+          </div>
+          <div class="auth-input-group">
+            <label>الاسم الثاني 👤</label>
+            <input type="text" id="reg-sname" required>
+          </div>
+        </div>
+        
+        <div class="auth-row">
+          <div class="auth-input-group">
+            <label>الاسم الثالث 👤</label>
+            <input type="text" id="reg-tname" required>
+          </div>
+          <div class="auth-input-group">
+            <label>الاسم الأخير 👤</label>
+            <input type="text" id="reg-lname" required>
+          </div>
+        </div>
+        
+        <div class="auth-input-group">
+          <label>رقم الهاتف 📞</label>
+          <input type="tel" id="reg-phone" required>
+        </div>
+        
+        <div class="auth-row">
+          <div class="auth-input-group">
+            <label>رقم هاتف الأب 📞</label>
+            <input type="tel" id="reg-fphone" required>
+          </div>
+          <div class="auth-input-group">
+            <label>رقم هاتف الأم 📞</label>
+            <input type="tel" id="reg-mphone" required>
+          </div>
+        </div>
+        
+        <div class="auth-input-group">
+          <label>المحافظة</label>
+          <select id="reg-gov" required>
+            <option value="" disabled selected>اختر المحافظة</option>
+            <option>السويس</option>
+            <option>القاهرة</option>
+            <option>الإسكندرية</option>
+            <option>الغربية</option>
+            <option>الدقهلية</option>
+            <option>القلوبية</option>
+            <option>المنوفية</option>
+            <option>الشرقية</option>
+            <option>المنصورة</option>
+            <option>أسوان</option>
+            <option>أسيوط</option>
+            <option>الأقصر</option>
+            <option>البحر الأحمر</option>
+            <option>البحيرة</option>
+            <option>بورسعيد</option>
+            <option>بني سويف</option>
+            <option>الإسماعيلية</option>
+            <option>كفر الشيخ</option>
+            <option>مطروح</option>
+            <option>الوادي الجديد</option>
+            <option>دمياط</option>
+            <option>سوهاج</option>
+            <option>جنوب سيناء</option>
+            <option>شمال سيناء</option>
+          </select>
+        </div>
+        
+        <div class="auth-input-group">
+          <label>النوع</label>
+          <select id="reg-gender" required>
+            <option value="" disabled selected>اختر النوع</option>
+            <option>ذكر</option>
+            <option>أنثى</option>
+          </select>
+        </div>
+        
+        <div class="auth-input-group">
+          <label>الصف الدراسي</label>
+          <select id="reg-grade" required>
+            <option value="" disabled selected>اختر الصف</option>
+            <option>الصف الأول الثانوي</option>
+            <option>الصف الثاني الثانوي</option>
+            <option>الصف الثالث الثانوي</option>
+          </select>
+        </div>
+        
+        <div class="auth-input-group">
+          <label>الشعبة</label>
+          <select id="reg-track" required>
+            <option value="" disabled selected>اختر الشعبة</option>
+            <option>علمي علوم</option>
+            <option>علمي رياضة</option>
+            <option>أدبي</option>
+            <option>عام (للصف الأول/الثاني)</option>
+          </select>
+        </div>
+        
+        <div class="auth-input-group">
+          <label>البريد الإلكتروني 📧</label>
+          <input type="email" id="reg-email" required>
+        </div>
+        
+        <div class="auth-row">
+          <div class="auth-input-group">
+            <label>كلمة السر 🔒</label>
+            <input type="password" id="reg-password" required minlength="6">
+          </div>
+          <div class="auth-input-group">
+            <label>تأكيد كلمة السر 🔒</label>
+            <input type="password" id="reg-confirm" required minlength="6">
+          </div>
+        </div>
+        
+        <button type="submit" id="reg-submit-btn" class="auth-submit">انشاء حساب</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Visual Side -->
+  <div class="auth-visual-side">
+    <div class="auth-visual-bg">اعملك اكونت وانجز</div>
+    <svg class="auth-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M45.7,-76.3C58.9,-69.3,69.1,-55.3,77.7,-40.8C86.3,-26.3,93.4,-11.3,91.8,2.7C90.2,16.7,80,29.7,70.5,41.8C61,53.9,52.2,65.1,40.4,72.4C28.6,79.7,14.3,83.1,-0.1,83.3C-14.5,83.5,-29,80.5,-41.8,73.4C-54.6,66.3,-65.7,55.1,-73.4,41.9C-81.1,28.7,-85.4,13.5,-84.8,-1.4C-84.2,-16.3,-78.7,-30.9,-70.2,-42.6C-61.7,-54.3,-50.2,-63.1,-37.4,-69.6C-24.6,-76.1,-12.3,-80.3,1.6,-82.9C15.5,-85.5,31,-86.5,45.7,-76.3Z" transform="translate(100 100)" />
+    </svg>
+    <img src="WhatsApp Image 2026-05-08 at 4.03.54 AM.jpeg" class="auth-img" alt="Teacher">
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
+  <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
+      <span style="font-size: 2rem;">غ</span><span style="color:var(--red);">ي</span>ث
+    </div>
+    <!-- تعديل الأيقونات هنا -->
+    <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
+      <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://www.facebook.com/share/1M5jZVKKHY/" target="_blank" style="width: 40px; height: 40px; background: #1877f2; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://youtube.com/@mr.mustafazemetar" target="_blank" style="width: 40px; height: 40px; background: #ff0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+      <a href="#" style="width: 40px; height: 40px; background: #3b5998; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-solid fa-users"></i>
+      </a>
+    </div>
+    <div style="width: 80%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+    <p style="font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px;">
+      💖 تم صنع هذه المنصة بهدف تهيئة الطالب لـ كامل جوانب الثانوية العامة و ما بعدها 💖
+    </p>
+    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap;">
+      <span>&lt; Developed By &gt;</span>
+      <a href="https://www.facebook.com/share/18a8bJafwV/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Mazen Khaled</a>
+      <span>,</span>
+      <span style="color: #38bdf8; font-weight: bold;">Mohamed Zemitar</span>
+      <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
+    </div>
+    <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+      MHD Powered by 
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    const nt = t === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nt);
+    document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
+    localStorage.setItem('ghaith_theme', nt);
+  }
+  (function () { 
+    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
+    document.documentElement.setAttribute('data-theme', t); 
+    setTimeout(() => { 
+      const b = document.getElementById('theme-btn'); 
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
+    }, 100); 
+  })();
+</script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<!-- Firebase Registration Logic -->
+<script>
+  document.getElementById('register-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // سحب البيانات من الخانات
+    const fname = document.getElementById('reg-fname').value.trim();
+    const sname = document.getElementById('reg-sname').value.trim();
+    const tname = document.getElementById('reg-tname').value.trim();
+    const lname = document.getElementById('reg-lname').value.trim();
+    const phone = document.getElementById('reg-phone').value.trim();
+    const fphone = document.getElementById('reg-fphone').value.trim();
+    const mphone = document.getElementById('reg-mphone').value.trim();
+    const gov = document.getElementById('reg-gov').value;
+    const gender = document.getElementById('reg-gender').value;
+    const grade = document.getElementById('reg-grade').value;
+    const track = document.getElementById('reg-track').value;
+    const email = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const confirmPassword = document.getElementById('reg-confirm').value;
+
+    const msgDiv = document.getElementById('reg-msg');
+    const submitBtn = document.getElementById('reg-submit-btn');
+
+    // 1. التأكد من تطابق كلمة السر
+    if (password !== confirmPassword) {
+      showMessage('كلمتا السر غير متطابقتين!', 'error');
+      return;
+    }
+
+    
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'جاري إنشاء الحساب...';
+    msgDiv.style.display = 'none';
+
+    // 3. إنشاء الحساب في فايربيس
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const fullName = `${fname} ${sname} ${tname} ${lname}`;
+
+        // 4. حفظ باقي البيانات في قاعدة البيانات
+        return firebase.database().ref('users/' + user.uid).set({
+          name: fullName,
+          phone: phone,
+          fatherPhone: fphone,
+          motherPhone: mphone,
+          governorate: gov,
+          gender: gender,
+          grade: grade,
+          track: track,
+          email: email,
+          role: 'student', 
+          createdAt: firebase.database.ServerValue.TIMESTAMP
+        });
+      })
+      .then(() => {
+        
+        firebase.auth().signOut().then(() => {
+          showMessage('تم التسجيل بنجاح! سيتم تحويلك لصفحة تسجيل الدخول...', 'success');
+          
+          setTimeout(() => {
+            window.location.href = 'login.html'; 
+          }, 3000); 
+        });
+      })
+      .catch((error) => {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'انشاء حساب';
+
+        let errorMessage = 'حدث خطأ، يرجى المحاولة مرة أخرى.';
+        if (error.code === 'auth/email-already-in-use') {
+          errorMessage = 'البريد الإلكتروني مستخدم بالفعل في حساب آخر.';
+        } else if (error.code === 'auth/weak-password') {
+          errorMessage = 'كلمة السر ضعيفة جداً، يجب أن تكون 6 أحرف على الأقل.';
+        }
+        
+        showMessage(errorMessage, 'error');
+      });
+  });
+
+  // دالة مساعدة لعرض الرسائل
+  function showMessage(text, type) {
+    const msgDiv = document.getElementById('reg-msg');
+    msgDiv.innerText = text;
+    msgDiv.style.display = 'block';
+    if (type === 'error') {
+      msgDiv.style.background = '#ef444420';
+      msgDiv.style.color = 'var(--red)';
+      msgDiv.style.border = '1px solid var(--red)';
+    } else {
+      msgDiv.style.background = '#10b98120';
+      msgDiv.style.color = 'var(--green)';
+      msgDiv.style.border = '1px solid var(--green)';
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شحن أكواد - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="user-body">
+  <nav class="user-nav">
+    <div class="unav-right">
+      <a href="index.html" class="unav-logo">غ<span>ي</span>ث</a>
+      <div class="unav-theme-toggle" onclick="toggleTheme()">
+        <span class="utt-sun">☀️</span>
+        <span class="utt-moon">🌙</span>
+      </div>
+    </div>
+    <div class="unav-left">
+      <button class="unav-bell">🔔</button>
+      <div class="unav-avatar"><img src="https://via.placeholder.com/45" alt="User"></div>
+    </div>
+  </nav>
+
+  <div class="user-top-band"></div>
+
+  <div class="user-container">
+    <div class="user-badge">
+      <span>ملف المستخدم</span>
+      <div class="ub-icon"></div>
+    </div>
+
+    <div class="user-grid">
+      <div class="user-content" style="flex-direction: column; gap: 20px; align-items: flex-start; justify-content: flex-start; padding: 20px;">
+        <h2 style="font-size: 1.2rem; color: var(--text);">شحن رصيد / إدخال كود الكورس</h2>
+        <p style="font-size: 0.9rem; color: var(--text2); margin-bottom: 10px;">أدخل الكود المكون من 12 أو 16 حرف الذي حصلت عليه لتفعيل الكورس.</p>
+        
+        <div id="current-user-badge" style="background: var(--bg); padding: 8px; border-radius: 6px; border: 1px dashed var(--physics-teal); color: var(--text2); font-size: 0.85rem; margin-bottom: 15px; text-align: center; width: 100%; max-width: 400px;">
+          جاري التحقق من الحساب...
+        </div>
+
+        <div id="recharge-msg" style="display: none; width: 100%; max-width: 400px; padding: 10px; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; text-align: center; margin-bottom: 10px;"></div>
+
+        <div style="display: flex; gap: 10px; width: 100%; max-width: 400px;">
+          <input type="text" id="code-input" placeholder="مثال: GHAITH-XXXX-XXXX" style="flex: 1; padding: 10px 15px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg3); color: var(--text); font-family: 'Cairo', sans-serif; text-transform: uppercase;">
+          <button id="recharge-btn" style="padding: 10px 20px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; font-family: 'Cairo', sans-serif; font-weight: bold; cursor: pointer;">تفعيل</button>
+        </div>
+      </div>
+
+      <div class="user-menu">
+        <a href="profile.html" class="um-item">ملف المستخدم</a>
+        <a href="recharge.html" class="um-item active">شحن أكواد</a>
+        <a href="courses.html" class="um-item">كورساتي</a>
+        <a href="security.html" class="um-item">الأمان و تاريخ تسجيل الدخول</a>
+        <a href="views.html" class="um-item">تفاصيل المشاهدات</a>
+        <a href="invoices.html" class="um-item">الفواتير</a>
+        <a href="subscriptions.html" class="um-item">الاشتراكات</a>
+        <a href="exam-results.html" class="um-item">نتائج الامتحانات</a>
+        <a href="assignment-results.html" class="um-item">نتائج الواجب</a>
+      </div>
+    </div>
+  </div>
+
+<footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
+  <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
+      <span style="font-size: 2rem;">غ</span><span style="color:var(--red);">ي</span>ث
+    </div>
+    <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
+      <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://www.facebook.com/share/1M5jZVKKHY/" target="_blank" style="width: 40px; height: 40px; background: #1877f2; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://youtube.com/@mr.mustafazemetar" target="_blank" style="width: 40px; height: 40px; background: #ff0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+      <a href="#" style="width: 40px; height: 40px; background: #3b5998; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-solid fa-users"></i>
+      </a>
+    </div>
+    <div style="width: 80%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+    <p style="font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px;">
+      💖 تم صنع هذه المنصة بهدف تهيئة الطالب لـ كامل جوانب الثانوية العامة و ما بعدها 💖
+    </p>
+    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap;">
+      <span>&lt; Developed By &gt;</span>
+      <a href="https://www.facebook.com/share/18a8bJafwV/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Mazen Khaled</a>
+      <span>,</span>
+      <span style="color: #38bdf8; font-weight: bold;">Mohamed Zemitar</span>
+      <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
+    </div>
+    <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+      MHD Powered by
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    const nt = t === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nt);
+    localStorage.setItem('ghaith_theme', nt);
+  }
+  (function () { 
+    const t = localStorage.getItem('ghaith_theme') || 'light'; 
+    document.documentElement.setAttribute('data-theme', t); 
+  })();
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<script>
+  // التأكد من تسجيل الدخول وطباعة الإيميل
+  firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+    
+    // إظهار إيميل الحساب المسجل حالياً عشان لو فيه لخبطة في الـ Localhost تبان
+    document.getElementById('current-user-badge').innerHTML = `أنت مسجل دخول حالياً بحساب: <b style="color: var(--physics-teal);">${user.email}</b>`;
+  });
+
+  document.getElementById('recharge-btn').addEventListener('click', function() {
+    const codeInput = document.getElementById('code-input').value.trim().toUpperCase();
+    const msgDiv = document.getElementById('recharge-msg');
+    const btn = document.getElementById('recharge-btn');
+
+    // 1. التأكد إن المستخدم كاتب حاجة
+    if (codeInput === '') {
+      showMessage('يرجى إدخال الكود أولاً!', 'error');
+      return;
+    }
+
+    // 2. التأكد من تسجيل الدخول
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      showMessage('يجب تسجيل الدخول أولاً لتفعيل الأكواد.', 'error');
+      return;
+    }
+
+    if (user.email === "admin@ghaith.com") {
+      showMessage('حساب الإدارة لا يمكنه شحن الأكواد! يرجى عمل تسجيل خروج والدخول بحساب طالب.', 'error');
+      return;
+    }
+
+    const userId = user.uid;
+    btn.disabled = true;
+    btn.innerText = 'جاري التحقق...';
+
+    // 3. البحث عن الكود في قاعدة البيانات
+    const codeRef = firebase.database().ref('generated_codes/' + codeInput);
+    
+    codeRef.once('value').then((snapshot) => {
+      if (snapshot.exists()) {
+        const codeData = snapshot.val();
+
+        // 4. التأكد إن الكود لم يستخدم من قبل
+        if (codeData.used === true) {
+          showMessage('عذراً، هذا الكود تم استخدامه من قبل.', 'error');
+          resetBtn();
+          return;
+        }
+
+        // 5. الكود سليم! نبدأ عملية التفعيل
+        const courseId = codeData.courseId; 
+        const dateNow = new Date().toLocaleDateString('ar-EG');
+
+        // أ) إضافة الكورس لملف الطالب
+        const enrollPromise = firebase.database().ref('enrolled_courses/' + userId + '/' + courseId).set(true);
+
+        // ب) كتابة فاتورة توضح عملية الشحن
+        const invoicePromise = firebase.database().ref('invoices/' + userId).push({
+          description: `تفعيل كورس بكود: ${codeInput}`,
+          amount: codeData.amount || '0',
+          status: 'paid',
+          date: dateNow
+        });
+
+        // ج) حرق الكود (تحديث حالته لمستخدم وإضافة ID الطالب اللي استخدمه)
+        const burnCodePromise = codeRef.update({ 
+          used: true, 
+          usedBy: userId, 
+          usedAt: firebase.database.ServerValue.TIMESTAMP 
+        });
+
+        // تنفيذ كل العمليات مع بعض
+        Promise.all([enrollPromise, invoicePromise, burnCodePromise])
+          .then(() => {
+            showMessage('تم تفعيل الكود بنجاح! تم إضافة الكورس لحسابك.', 'success');
+            document.getElementById('code-input').value = ''; // تفريغ الخانة
+            resetBtn();
+          })
+          .catch((error) => {
+            showMessage('حدث خطأ أثناء التفعيل. يرجى التواصل مع الدعم.', 'error');
+            console.error(error);
+            resetBtn();
+          });
+
+      } else {
+        showMessage('الكود غير صحيح، تأكد من الحروف والأرقام.', 'error');
+        resetBtn();
+      }
+    }).catch((error) => {
+      showMessage('خطأ في الاتصال بالسيرفر.', 'error');
+      resetBtn();
+    });
+
+    // دالة مساعدة لعرض الرسائل
+    function showMessage(text, type) {
+      msgDiv.innerText = text;
+      msgDiv.style.display = 'block';
+      if (type === 'error') {
+        msgDiv.style.background = '#ef444420';
+        msgDiv.style.color = 'var(--red)';
+        msgDiv.style.border = '1px solid var(--red)';
+      } else {
+        msgDiv.style.background = '#10b98120';
+        msgDiv.style.color = 'var(--green)';
+        msgDiv.style.border = '1px solid var(--green)';
+      }
+    }
+
+    // دالة مساعدة لإرجاع الزرار لشكله الطبيعي
+    function resetBtn() {
+      btn.disabled = false;
+      btn.innerText = 'تفعيل';
+    }
+  });
+</script>
+</body>
+</html>

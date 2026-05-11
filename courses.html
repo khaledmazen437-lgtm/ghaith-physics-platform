@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>كورساتي - منصة غيث للفيزياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="user-body">
+  
+  <nav class="user-nav">
+    <div class="unav-right">
+      <a href="index.html" class="unav-logo">غ<span>ي</span>ث</a>
+      <div class="unav-theme-toggle" onclick="toggleTheme()">
+        <span class="utt-sun">☀️</span>
+        <span class="utt-moon">🌙</span>
+      </div>
+    </div>
+    <div class="unav-left">
+      <button class="unav-bell">🔔</button>
+      <div class="unav-avatar"><img src="https://via.placeholder.com/45" alt="User"></div>
+    </div>
+  </nav>
+
+  <div class="user-top-band"></div>
+
+  <div class="user-container">
+    <div class="user-badge">
+      <span>تصفح الكورسات</span>
+      <div class="ub-icon"></div>
+    </div>
+
+    <div class="user-grid">
+      <div class="user-content" style="flex-direction: column; align-items: flex-start; padding: 20px;">
+        
+        <div id="empty-state" class="empty-state" style="width: 100%;">
+          <span class="es-text" id="empty-text">جاري تحميل الكورسات...</span>
+          <span class="es-icon"><i class="fa-solid fa-spinner fa-spin"></i></span>
+        </div>
+
+        <div id="courses-container" style="display: none; width: 100%; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+          </div>
+
+      </div>
+
+      <div class="user-menu">
+        <a href="profile.html" class="um-item">ملف المستخدم</a>
+        <a href="recharge.html" class="um-item">شحن أكواد</a>
+        <a href="courses.html" class="um-item active">كورساتي</a>
+        <a href="security.html" class="um-item">الأمان و تاريخ تسجيل الدخول</a>
+        <a href="views.html" class="um-item">تفاصيل المشاهدات</a>
+        <a href="invoices.html" class="um-item">الفواتير</a>
+        <a href="subscriptions.html" class="um-item">الاشتراكات</a>
+        <a href="exam-results.html" class="um-item">نتائج الامتحانات</a>
+        <a href="assignment-results.html" class="um-item">نتائج الواجب</a>
+      </div>
+    </div>
+  </div>
+
+<footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
+  <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
+      <span style="font-size: 2rem;">غ</span><span style="color:var(--red);">ي</span>ث
+    </div>
+    <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
+      <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://www.facebook.com/share/1M5jZVKKHY/" target="_blank" style="width: 40px; height: 40px; background: #1877f2; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://youtube.com/@mr.mustafazemetar" target="_blank" style="width: 40px; height: 40px; background: #ff0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+      <a href="#" style="width: 40px; height: 40px; background: #3b5998; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
+        <i class="fa-solid fa-users"></i>
+      </a>
+    </div>
+    <div style="width: 80%; height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+    <p style="font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px;">
+      💖 تم صنع هذه المنصة بهدف تهيئة الطالب لـ كامل جوانب الثانوية العامة و ما بعدها 💖
+    </p>
+    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 5px; flex-wrap: wrap;">
+      <span>&lt; Developed By &gt;</span>
+      <a href="https://www.facebook.com/share/18a8bJafwV/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold;">Mazen Khaled</a>
+      <span>,</span>
+      <span style="color: #38bdf8; font-weight: bold;">Mohamed Zemitar</span>
+      <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
+    </div>
+    <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
+      MHD Powered by 
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Theme Toggle Logic
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    const nt = t === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nt);
+    localStorage.setItem('ghaith_theme', nt);
+  }
+  (function () { 
+    const t = localStorage.getItem('ghaith_theme') || 'light'; 
+    document.documentElement.setAttribute('data-theme', t); 
+  })();
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<script>
+  firebase.auth().onAuthStateChanged((user) => {
+    const emptyState = document.getElementById('empty-state');
+    const coursesContainer = document.getElementById('courses-container');
+    const emptyText = document.getElementById('empty-text');
+
+    if (user) {
+      const userId = user.uid;
+      
+      // 1. جلب الكورسات اللي الطالب مشترك فيها فعلاً عشان نغير شكل الزرار
+      firebase.database().ref('enrolled_courses/' + userId).on('value', (enrolledSnap) => {
+        const enrolledCourses = enrolledSnap.exists() ? enrolledSnap.val() : {};
+
+        // 2. جلب كل الكورسات المتاحة على المنصة (اللي الأدمن ضافها)
+        firebase.database().ref('courses').on('value', (coursesSnap) => {
+          if (coursesSnap.exists()) {
+            emptyState.style.display = 'none';
+            coursesContainer.style.display = 'grid';
+            coursesContainer.innerHTML = ''; // تفريغ الحاوية القديمة
+
+            // المرور على كل كورس في المنصة
+            coursesSnap.forEach((childSnapshot) => {
+              const courseId = childSnapshot.key;
+              const course = childSnapshot.val();
+              
+              // تحديد صورة الغلاف
+              const cover = course.coverUrl ? course.coverUrl : `https://via.placeholder.com/300x150?text=${encodeURIComponent(course.name)}`;
+
+              // فحص هل الطالب مشترك في الكورس ده ولا لأ
+              const isEnrolled = enrolledCourses[courseId];
+
+              // تحديد شكل الزرار واللينك بتاعه بناءً على اشتراك الطالب
+              let actionButton = '';
+              if (isEnrolled) {
+                actionButton = `
+                  <a href="course-content.html?id=${courseId}" style="display: block; text-align: center; background: #10b981; color: #fff; padding: 10px; border-radius: 6px; text-decoration: none; font-family: 'Cairo'; font-weight: bold; font-size: 0.95rem;">
+                    <i class="fa-solid fa-play"></i> متابعة التعلم (مشترك)
+                  </a>
+                `;
+              } else {
+              
+                actionButton = `
+                  <a href="course-details.html?id=${courseId}" style="display: block; text-align: center; background: #3b82f6; color: #fff; padding: 10px; border-radius: 6px; text-decoration: none; font-family: 'Cairo'; font-weight: bold; font-size: 0.95rem;">
+                    <i class="fa-solid fa-circle-info"></i> التفاصيل والاشتراك
+                  </a>
+                `;
+              }
+
+              // تصميم كارت الكورس
+              const courseCard = `
+                <div style="background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s;">
+                  <img src="${cover}" alt="Course Cover" style="width: 100%; height: 150px; object-fit: cover;">
+                  <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
+                    <h3 style="color: var(--text); font-size: 1.1rem; margin-bottom: 10px;">${course.name}</h3>
+                    <p style="color: var(--text2); font-size: 0.85rem; margin-bottom: 15px; flex-grow: 1;">
+                      ${course.description ? course.description.substring(0, 60) + '...' : 'كورس تعليمي متميز من منصة غيث.'}
+                    </p>
+                    ${actionButton}
+                  </div>
+                </div>
+              `;
+              
+              coursesContainer.innerHTML += courseCard;
+            });
+          } else {
+            // لو الأدمن لسه مضفش أي كورسات على المنصة خالص
+            emptyState.style.display = 'flex';
+            coursesContainer.style.display = 'none';
+            emptyText.innerText = "لا توجد كورسات متاحة على المنصة حالياً.";
+            emptyState.querySelector('.es-icon').innerHTML = "📦";
+          }
+        });
+      });
+    } else {
+      // طرد الطالب لصفحة الدخول لو مش مسجل
+      window.location.href = 'login.html';
+    }
+  });
+</script>
+</body>
+</html>

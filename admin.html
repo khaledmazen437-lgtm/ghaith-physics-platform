@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة الإدارة الشاملة - منصة غيث</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    
+    .admin-form-group { margin-bottom: 15px; }
+    .admin-input {
+      width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border); 
+      background: var(--bg); color: var(--text); font-family: 'Cairo'; outline: none; transition: 0.3s;
+    }
+    .admin-input:focus { border-color: var(--physics-teal); box-shadow: 0 0 0 3px rgba(26, 79, 92, 0.1); }
+    
+    .admin-btn {
+      padding: 12px 20px; background: #3b82f6; color: #fff; border: none; 
+      border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; transition: 0.3s;
+    }
+    .admin-btn:hover { background: #2563eb; transform: translateY(-2px); }
+    .admin-btn-success { background: var(--society-green, #bacb3f); color: #1a4f5c; }
+    .admin-btn-danger { background: #ef4444; color: #fff; }
+    .admin-btn-danger:hover { background: #dc2626; }
+    
+    .admin-section-card {
+      background: var(--bg3); padding: 25px; border-radius: 12px; 
+      border: 1px solid var(--border); margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    /* تنسيق الجداول بشكل عصري */
+    .admin-table { width: 100%; border-collapse: collapse; background: var(--bg3); border-radius: 8px; overflow: hidden; }
+    .admin-table th { background: rgba(0,0,0,0.05); padding: 15px; text-align: right; color: var(--text); font-weight: 900; }
+    .admin-table td { padding: 15px; text-align: right; color: var(--text); border-bottom: 1px solid var(--border); transition: 0.2s; }
+    .admin-table tbody tr:hover { background: rgba(0,0,0,0.02); }
+    
+    .q-block { 
+      background: var(--bg); padding: 20px; border-radius: 8px; margin-bottom: 15px; 
+      border-right: 4px solid var(--physics-teal); box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+    
+    .action-icon {
+      cursor: pointer; padding: 6px 10px; border-radius: 6px; border: none; font-size: 1rem; margin-right: 5px; transition: 0.3s;
+    }
+    .edit-icon { background: #3b82f620; color: #3b82f6; }
+    .edit-icon:hover { background: #3b82f6; color: #fff; }
+    .delete-icon { background: #ef444420; color: #ef4444; }
+    .delete-icon:hover { background: #ef4444; color: #fff; }
+    
+    /* شاشة الدخول */
+    #admin-login-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center;
+    }
+    .admin-login-box {
+      background: var(--bg3); padding: 40px; border-radius: 12px; width: 90%; max-width: 400px;
+      border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.1); text-align: center;
+    }
+
+    /* نافذة تقرير الطالب (Modal) */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px);
+    }
+    .modal-content {
+      background: var(--bg3); padding: 30px; border-radius: 12px; width: 90%; max-width: 600px;
+      border: 1px solid var(--border); position: relative; max-height: 80vh; overflow-y: auto;
+    }
+    .close-modal {
+      position: absolute; top: 15px; left: 15px; background: none; border: none; 
+      font-size: 1.5rem; color: var(--text2); cursor: pointer;
+    }
+  </style>
+
+  <script>
+    // الحماية المبدئية
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+      if(e.keyCode == 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || 
+        (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+        return false;
+      }
+    };
+  </script>
+</head>
+<body class="user-body">
+
+  <div id="admin-login-overlay">
+    <div class="admin-login-box">
+      <div style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700; margin-bottom: 20px;">
+        <span style="color: var(--text);">غ</span><span style="color:var(--red);">ي</span><span style="color: var(--text);">ث</span>
+      </div>
+      <h2 style="color: var(--text); margin-bottom: 20px; font-size: 1.2rem;">بوابة الإدارة </h2>
+      <div id="admin-login-error" style="display:none; color: var(--red); margin-bottom: 15px; font-weight:bold;"></div>
+      
+      <form id="admin-login-form">
+        <input type="email" id="admin-email" class="admin-input admin-form-group" placeholder="البريد الإلكتروني للإدارة" required>
+        <input type="password" id="admin-password" class="admin-input admin-form-group" placeholder="كلمة المرور" required>
+        <button type="submit" id="admin-login-btn" class="admin-btn" style="width: 100%; background: var(--dark-teal);">تسجيل الدخول المستتر</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="student-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-modal" onclick="document.getElementById('student-modal').style.display='none'">&times;</button>
+      <h2 id="modal-student-name" style="color: var(--physics-teal); margin-bottom: 5px;">اسم الطالب</h2>
+      <p id="modal-student-info" style="color: var(--text2); margin-bottom: 20px; font-size: 0.9rem;">البريد - الصف</p>
+      
+      <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 10px; border-bottom: 2px solid var(--border); padding-bottom: 5px;">نتائج الامتحانات</h3>
+      <div id="modal-exams-list" style="margin-bottom: 20px; color: var(--text2); font-size: 0.9rem;">جاري التحميل...</div>
+
+      <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 10px; border-bottom: 2px solid var(--border); padding-bottom: 5px;">نتائج الواجبات</h3>
+      <div id="modal-assignments-list" style="color: var(--text2); font-size: 0.9rem;">جاري التحميل...</div>
+    </div>
+  </div>
+
+  <div id="admin-main-content" style="display: none;">
+    <nav class="user-nav">
+      <div class="unav-right">
+        <a href="index.html" class="unav-logo">غ<span>ي</span>ث</a>
+        <div class="unav-theme-toggle" onclick="toggleTheme()">
+          <span class="utt-sun">☀️</span>
+          <span class="utt-moon">🌙</span>
+        </div>
+      </div>
+      <div class="unav-left">
+        <div style="font-family: 'Cairo', sans-serif; font-weight: bold; color: var(--red);">لوحة الإدارة (Admin)</div>
+        <div class="unav-avatar"><img src="https://via.placeholder.com/45?text=Ad" alt="Admin"></div>
+      </div>
+    </nav>
+
+    <div class="user-top-band" style="background: var(--dark-teal);"></div>
+
+    <div class="user-container">
+      <div class="user-badge" style="border-color: var(--dark-teal);">
+        <span>لوحة التحكم المتقدمة</span>
+        <div class="ub-icon" style="background: var(--dark-teal);"></div>
+      </div>
+
+      <div class="user-grid">
+        <div class="user-content" style="flex-direction: column; align-items: flex-start; justify-content: flex-start; overflow-x: auto; padding: 20px;">
+          
+          <div id="view-dashboard" class="admin-view" style="width: 100%;">
+            <h2 style="font-size: 1.4rem; color: var(--text); margin-bottom: 20px;"><i class="fa-solid fa-chart-pie"></i> نظرة عامة والتقارير المالية</h2>
+            
+            <div style="width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 25px;">
+              <div class="admin-section-card" style="text-align: center; margin-bottom: 0;">
+                <div id="stat-students" style="font-size: 2.5rem; color: #3b82f6; font-weight: bold;">0</div>
+                <div style="color: var(--text2); font-size: 1rem;">إجمالي الطلاب</div>
+              </div>
+              <div class="admin-section-card" style="text-align: center; margin-bottom: 0;">
+                <div id="stat-courses" style="font-size: 2.5rem; color: var(--red); font-weight: bold;">0</div>
+                <div style="color: var(--text2); font-size: 1rem;">الكورسات النشطة</div>
+              </div>
+              <div class="admin-section-card" style="text-align: center; margin-bottom: 0;">
+                <div id="stat-assignments" style="font-size: 2.5rem; color: var(--green); font-weight: bold;">0</div>
+                <div style="color: var(--text2); font-size: 1rem;">الواجبات والمهام</div>
+              </div>
+              <div class="admin-section-card" style="text-align: center; margin-bottom: 0;">
+                <div id="stat-codes" style="font-size: 2.5rem; color: #eab308; font-weight: bold;">0</div>
+                <div style="color: var(--text2); font-size: 1rem;">إجمالي الأكواد</div>
+              </div>
+              <div class="admin-section-card" style="text-align: center; margin-bottom: 0; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); border-color: #10b981;">
+                <div id="stat-profits" style="font-size: 2.5rem; color: #10b981; font-weight: bold;">0 ج.م</div>
+                <div style="color: var(--text2); font-size: 1rem;">الأرباح المحصلة</div>
+              </div>
+            </div>
+
+            <div class="admin-section-card">
+              <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;"><i class="fa-solid fa-bell" style="color: #eab308;"></i> إرسال إشعار للطلاب</h3>
+              <textarea id="notice-text" class="admin-input admin-form-group" placeholder="اكتب التنبيه هنا (سيظهر لجميع الطلاب في الرئيسية)..." rows="2"></textarea>
+              <button id="btn-send-notice" class="admin-btn">إرسال الإشعار 📢</button>
+            </div>
+          </div>
+
+          <div id="view-courses" class="admin-view" style="width: 100%; display: none;">
+            <h2 style="font-size: 1.4rem; color: var(--text); margin-bottom: 20px;"><i class="fa-solid fa-video"></i> إدارة الكورسات ومحتواها</h2>
+            
+            <div class="admin-section-card">
+              <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;"><i class="fa-solid fa-folder-plus"></i> إنشاء / تعديل كورس</h3>
+              <input id="course-name" type="text" class="admin-input admin-form-group" placeholder="اسم الكورس (مثال: فيزياء الصف الثالث - الباب الأول)">
+              <textarea id="course-desc" class="admin-input admin-form-group" placeholder="وصف الكورس للطالب" rows="3"></textarea>
+              <input id="course-main-cover" type="text" class="admin-input admin-form-group" placeholder="رابط صورة غلاف الكورس (Thumbnail)">
+              <button id="btn-add-course" class="admin-btn">حفظ الكورس</button>
+              <button id="btn-cancel-edit-course" class="admin-btn admin-btn-danger" style="display:none; margin-right:10px;">إلغاء التعديل</button>
+            </div>
+
+            <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;">الكورسات الحالية (تعديل / حذف)</h3>
+            <div style="overflow-x: auto; margin-bottom: 25px;">
+              <table class="admin-table">
+                <thead><tr><th>اسم الكورس</th><th>الوصف</th><th>الإجراءات</th></tr></thead>
+                <tbody id="courses-table-body"></tbody>
+              </table>
+            </div>
+
+            <div class="admin-section-card">
+              <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;"><i class="fa-solid fa-file-video"></i> إضافة درس/فيديو لكورس موجود</h3>
+              <select id="video-course-select" class="admin-input admin-form-group"><option value="">اختر الكورس...</option></select>
+              <input id="video-title" type="text" class="admin-input admin-form-group" placeholder="عنوان الدرس (مثال: الحصة الأولى - قانون أوم)">
+              <input id="video-url" type="text" class="admin-input admin-form-group" placeholder="رابط اليوتيوب (YouTube URL)">
+              <input id="video-pdf" type="text" class="admin-input admin-form-group" placeholder="رابط ملزمة الشرح PDF (اختياري)">
+              <button id="btn-add-video" class="admin-btn admin-btn-success">إضافة الدرس للكورس</button>
+            </div>
+          </div>
+
+          <div id="view-codes" class="admin-view" style="width: 100%; display: none;">
+            <h2 style="font-size: 1.4rem; color: var(--text); margin-bottom: 20px;"><i class="fa-solid fa-barcode"></i> توليد وإدارة الأكواد</h2>
+            <div class="admin-section-card">
+              <p style="color: var(--text2); font-size: 0.9rem; margin-bottom: 15px;">حدد الكورس الذي سيفتحه الكود وكمية الأكواد المطلوبة.</p>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <select id="code-course-select" class="admin-input admin-form-group"><option value="">1. اختر الكورس لربطه بالأكواد...</option></select>
+                <input id="code-amount" type="number" class="admin-input admin-form-group" placeholder="2. سعر الكورس/الكود (ج.م)">
+                <input id="code-quantity" type="number" class="admin-input admin-form-group" placeholder="3. عدد الأكواد المطلوبة (مثال: 50)">
+              </div>
+              <button id="btn-generate-codes" class="admin-btn" style="width: 100%; margin-top: 10px;">توليد الأكواد الآن </button>
+            </div>
+
+            <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;">الأكواد المولدة (تعديل / حذف)</h3>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead><tr><th>الكود</th><th>الكورس المربوط به</th><th>السعر</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
+                <tbody id="codes-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="view-students" class="admin-view" style="width: 100%; display: none;">
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h2 style="font-size: 1.4rem; color: var(--text);"><i class="fa-solid fa-users"></i> إدارة الطلاب ومتابعة التقدم</h2>
+              <input type="text" placeholder="بحث عن طالب..." class="admin-input" style="width: 250px;">
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead><tr><th>الاسم</th><th>البريد / كود الدخول</th><th>الصف</th><th>الإجراءات</th></tr></thead>
+                <tbody id="students-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="view-assignments" class="admin-view" style="width: 100%; display: none;">
+            <h2 style="font-size: 1.4rem; color: var(--text); margin-bottom: 20px;"><i class="fa-solid fa-book-open"></i> إدارة وتقييم الواجبات</h2>
+            <div class="admin-section-card">
+              <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;">إضافة واجب جديد للكورس</h3>
+              <select id="assign-course-select" class="admin-input admin-form-group"><option value="">اختر الكورس...</option></select>
+              <input id="assign-title" type="text" class="admin-input admin-form-group" placeholder="عنوان الواجب">
+              <textarea id="assign-desc" class="admin-input admin-form-group" placeholder="تفاصيل الواجب أو الأسئلة" rows="3"></textarea>
+              <input id="assign-pdf" type="text" class="admin-input admin-form-group" placeholder="رابط ملف PDF للواجب (اختياري)">
+              <button id="btn-add-assignment" class="admin-btn">إرسال الواجب للطلاب</button>
+            </div>
+
+            <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;">الواجبات الحالية</h3>
+            <div style="overflow-x: auto; margin-bottom: 25px;">
+              <table class="admin-table">
+                <thead><tr><th>الواجب</th><th>الوصف</th><th>الإجراءات</th></tr></thead>
+                <tbody id="assignments-list-body"></tbody>
+              </table>
+            </div>
+
+            <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;">سجل تسليمات الواجبات ورصد الدرجات</h3>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead><tr><th>اسم الطالب</th><th>الواجب</th><th>الإجابة / المرفق</th><th>التاريخ</th><th style="width: 120px;">الدرجة</th><th>تقييم</th></tr></thead>
+                <tbody id="submissions-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="view-exams" class="admin-view" style="width: 100%; display: none;">
+            <h2 style="font-size: 1.4rem; color: var(--text); margin-bottom: 20px;"><i class="fa-solid fa-stopwatch"></i> إدارة الامتحانات (MCQ)</h2>
+            <div class="admin-section-card">
+              <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;">إنشاء امتحان أونلاين</h3>
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px;">
+                <input id="exam-name" type="text" class="admin-input admin-form-group" placeholder="اسم الامتحان الشامل">
+                <input id="exam-duration" type="number" class="admin-input admin-form-group" placeholder="المدة (بالدقائق)">
+              </div>
+              
+              <div id="questions-builder"></div>
+              
+              <button type="button" id="btn-add-q-ui" class="admin-btn" style="background: var(--dark-teal); margin-bottom: 15px;">+ إضافة سؤال MCQ</button>
+              <br>
+              <button type="button" id="btn-publish-exam" class="admin-btn admin-btn-success" style="width: 100%;">نشر الامتحان للطلاب 🚀</button>
+            </div>
+
+            <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;">الامتحانات الحالية</h3>
+            <div style="overflow-x: auto; margin-bottom: 25px;">
+              <table class="admin-table">
+                <thead><tr><th>اسم الامتحان</th><th>المدة</th><th>الإجراءات</th></tr></thead>
+                <tbody id="exams-list-body"></tbody>
+              </table>
+            </div>
+
+            <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 15px;">نتائج الامتحانات (مباشر)</h3>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead><tr><th>اسم الطالب</th><th>الامتحان</th><th>الدرجة</th><th>النسبة</th></tr></thead>
+                <tbody id="exam-results-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="user-menu">
+          <a href="#" class="um-item active" onclick="switchView('dashboard', this); return false;"><i class="fa-solid fa-chart-pie"></i> الرئيسية</a>
+          <a href="#" class="um-item" onclick="switchView('codes', this); return false;"><i class="fa-solid fa-barcode"></i> توليد الأكواد</a>
+          <a href="#" class="um-item" onclick="switchView('courses', this); return false;"><i class="fa-solid fa-video"></i> الكورسات والفيديوهات</a>
+          <a href="#" class="um-item" onclick="switchView('students', this); return false;"><i class="fa-solid fa-users"></i> متابعة الطلاب</a>
+          <a href="#" class="um-item" onclick="switchView('assignments', this); return false;"><i class="fa-solid fa-book-open"></i> الواجبات</a>
+          <a href="#" class="um-item" onclick="switchView('exams', this); return false;"><i class="fa-solid fa-stopwatch"></i> الامتحانات</a>
+          <a href="#" class="um-item" style="color:var(--red);" id="btn-admin-logout"><i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج</a>
+        </div>
+      </div>
+    </div>
+
+  <footer class="footer" style="background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto;">
+    <p style="font-family: 'Cairo'; margin-bottom: 5px;">MHD Powered by</p>
+    <p style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem;">&lt; All Copy Rights Reserved @2026 &gt;</p>
+  </footer>
+  </div> 
+
+<script>
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    const nt = t === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nt);
+    localStorage.setItem('ghaith_theme', nt);
+  }
+  (function () { 
+    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
+    document.documentElement.setAttribute('data-theme', t); 
+  })();
+
+  function switchView(viewId, element) {
+    const views = document.querySelectorAll('.admin-view');
+    views.forEach(v => v.style.display = 'none');
+    document.getElementById('view-' + viewId).style.display = 'block';
+    const menuItems = document.querySelectorAll('.um-item');
+    menuItems.forEach(item => item.classList.remove('active'));
+    element.classList.add('active');
+  }
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<script>
+  
+  const ADMIN_EMAIL = "admin@ghaith.com"; 
+  let isAdminInit = false; 
+  
+  window.usersCache = {};
+  window.coursesCache = {};
+
+  auth.onAuthStateChanged((user) => {
+    if (user && user.email === ADMIN_EMAIL) {
+      document.getElementById('admin-login-overlay').style.display = 'none';
+      document.getElementById('admin-main-content').style.display = 'block';
+      if(!isAdminInit) { initAdminPanel(); isAdminInit = true; } 
+    } else {
+      document.getElementById('admin-login-overlay').style.display = 'flex';
+      document.getElementById('admin-main-content').style.display = 'none';
+    }
+  });
+
+  document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('admin-email').value.trim();
+    const password = document.getElementById('admin-password').value;
+    const btn = document.getElementById('admin-login-btn');
+    const errBox = document.getElementById('admin-login-error');
+    errBox.style.display = "none";
+
+    if(email !== ADMIN_EMAIL) {
+      errBox.innerText = "غير مصرح لك بالدخول!";
+      errBox.style.display = "block";
+      return;
+    }
+    btn.innerText = "جاري التحقق...";
+    btn.disabled = true;
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => { errBox.style.display = "none"; })
+      .catch(() => {
+        errBox.innerText = "بيانات الدخول غير صحيحة.";
+        errBox.style.display = "block";
+        btn.disabled = false;
+        btn.innerText = "تسجيل الدخول المستتر";
+      });
+  });
+
+  document.getElementById('btn-admin-logout').addEventListener('click', () => {
+    auth.signOut().then(() => location.reload());
+  });
+
+  window.deleteItem = function(path, id) {
+    if(confirm("هل أنت متأكد من الحذف؟ لا يمكن التراجع.")) {
+      database.ref(path + '/' + id).remove().then(() => alert('تم الحذف بنجاح!'));
+    }
+  };
+
+  window.editCode = function(codeId, currentName, currentAmount) {
+    let newName = prompt("تعديل اسم الكورس المربوط بالكود:", currentName);
+    if(newName === null) return;
+    let newAmount = prompt("تعديل السعر:", currentAmount);
+    if(newAmount === null) return;
+    
+    database.ref('generated_codes/' + codeId).update({
+      courseName: newName, amount: newAmount
+    }).then(() => alert('تم التعديل!'));
+  };
+
+  window.editCourse = function(courseId) {
+    let c = window.coursesCache[courseId];
+    if(!c) return;
+    document.getElementById('course-name').value = c.name || '';
+    document.getElementById('course-desc').value = c.description || '';
+    document.getElementById('course-main-cover').value = c.coverUrl || '';
+    
+    const btn = document.getElementById('btn-add-course');
+    btn.innerText = "تحديث بيانات الكورس";
+    btn.dataset.editId = courseId; 
+    document.getElementById('btn-cancel-edit-course').style.display = 'inline-block';
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  };
+
+  document.getElementById('btn-cancel-edit-course').addEventListener('click', function() {
+    document.getElementById('course-name').value = '';
+    document.getElementById('course-desc').value = '';
+    document.getElementById('course-main-cover').value = '';
+    const btn = document.getElementById('btn-add-course');
+    btn.innerText = "حفظ الكورس";
+    delete btn.dataset.editId;
+    this.style.display = 'none';
+  });
+
+  
+  window.showStudentReport = function(studentId) {
+    const student = window.usersCache[studentId];
+    if(!student) return alert("بيانات الطالب غير متاحة.");
+    
+    document.getElementById('modal-student-name').innerText = student.name || 'بدون اسم';
+    document.getElementById('modal-student-info').innerText = (student.email || 'لا يوجد بريد') + " - " + (student.grade || 'غير محدد');
+    
+    // جلب نتائج الامتحانات
+    const examsList = document.getElementById('modal-exams-list');
+    examsList.innerHTML = 'جاري التحميل...';
+    database.ref('exam_results/' + studentId).once('value').then(snap => {
+      if(!snap.exists()) { examsList.innerHTML = 'لم يمتحن أي امتحان.'; return; }
+      examsList.innerHTML = '<ul style="list-style:none; padding:0;">';
+      snap.forEach(e => {
+        let ex = e.val();
+        examsList.innerHTML += `<li style="padding:5px 0; border-bottom:1px solid #ddd;">امتحان: ${ex.examName || e.key} | الدرجة: <b style="color:var(--red)">${ex.score}</b> | ${ex.percentage}%</li>`;
+      });
+      examsList.innerHTML += '</ul>';
+    });
+
+    // جلب نتائج الواجبات
+    const assigList = document.getElementById('modal-assignments-list');
+    assigList.innerHTML = 'جاري التحميل...';
+    database.ref('assignment_results/' + studentId).once('value').then(snap => {
+      if(!snap.exists()) { assigList.innerHTML = 'لا توجد واجبات مقيمة.'; return; }
+      assigList.innerHTML = '<ul style="list-style:none; padding:0;">';
+      snap.forEach(a => {
+        let as = a.val();
+        assigList.innerHTML += `<li style="padding:5px 0; border-bottom:1px solid #ddd;">واجب: ${as.title || a.key} | الدرجة: <b style="color:var(--society-green)">${as.score}</b>/100</li>`;
+      });
+      assigList.innerHTML += '</ul>';
+    });
+
+    document.getElementById('student-modal').style.display = 'flex';
+  };
+
+  
+  // تشغيل لوحة الإدارة الرئيسية
+  
+  function initAdminPanel() {
+
+    
+    database.ref('users').on('value', (snapshot) => {
+      document.getElementById('stat-students').innerText = snapshot.numChildren();
+      const studentsTable = document.getElementById('students-table-body');
+      studentsTable.innerHTML = ''; 
+      window.usersCache = {}
+
+      snapshot.forEach((childSnapshot) => {
+        const stId = childSnapshot.key;
+        const st = childSnapshot.val();
+        window.usersCache[stId] = st; 
+
+        studentsTable.innerHTML += `
+          <tr>
+            <td style="font-weight:bold;">${st.name || 'بدون اسم'}</td>
+            <td>${st.email || '---'}</td>
+            <td>${st.grade || '---'}</td>
+            <td>
+              <button class="admin-btn" style="padding:5px 15px; font-size:0.8rem; background: var(--physics-teal);" onclick="showStudentReport('${stId}')">تقرير تفصيلي</button>
+              <button class="action-icon delete-icon" onclick="deleteItem('users', '${stId}')"><i class="fa-solid fa-user-xmark"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+    });
+
+    document.getElementById('btn-send-notice').addEventListener('click', function() {
+      const msg = document.getElementById('notice-text').value;
+      if(!msg) return alert("اكتب الإشعار أولاً!");
+      database.ref('announcements').push({ message: msg, date: new Date().toLocaleDateString('ar-EG'), timestamp: firebase.database.ServerValue.TIMESTAMP })
+        .then(() => { alert("تم الإرسال!"); document.getElementById('notice-text').value = ''; });
+    });
+
+    document.getElementById('btn-generate-codes').addEventListener('click', function() {
+      const courseId = document.getElementById('code-course-select').value;
+      const amount = document.getElementById('code-amount').value;
+      const quantity = parseInt(document.getElementById('code-quantity').value);
+      if(!courseId || !quantity || quantity <= 0) return alert("يرجى اختيار الكورس وتحديد عدد الأكواد!");
+
+      let generatedCount = 0;
+      const courseName = document.getElementById('code-course-select').options[document.getElementById('code-course-select').selectedIndex].text;
+
+      for(let i=0; i<quantity; i++) {
+        const newCode = `GHAITH-${Math.random().toString(36).substring(2,6).toUpperCase()}-${Math.random().toString(36).substring(2,6).toUpperCase()}`;
+        database.ref('generated_codes/' + newCode).set({
+          courseId: courseId, courseName: courseName, amount: amount || 0, used: false, createdAt: firebase.database.ServerValue.TIMESTAMP
+        }).then(() => {
+          generatedCount++;
+          if(generatedCount === quantity) { alert(`تم توليد ${quantity} كود!`); document.getElementById('code-quantity').value = ''; }
+        });
+      }
+    });
+
+    document.getElementById('btn-add-course').addEventListener('click', function() {
+      const name = document.getElementById('course-name').value;
+      const desc = document.getElementById('course-desc').value;
+      const cover = document.getElementById('course-main-cover').value;
+      if(name === '') return alert("يرجى إدخال اسم الكورس!");
+
+      const editId = this.dataset.editId;
+      if(editId) {
+        database.ref('courses/' + editId).update({ name: name, description: desc, coverUrl: cover }).then(() => {
+          alert("تم التحديث!"); document.getElementById('btn-cancel-edit-course').click();
+        });
+      } else {
+        database.ref('courses').push({ name: name, description: desc, coverUrl: cover, createdAt: firebase.database.ServerValue.TIMESTAMP }).then(() => {
+          alert("تمت الإضافة!");
+          document.getElementById('course-name').value = ''; document.getElementById('course-desc').value = ''; document.getElementById('course-main-cover').value = '';
+        });
+      }
+    });
+
+    document.getElementById('btn-add-video').addEventListener('click', function() {
+      const courseId = document.getElementById('video-course-select').value;
+      const title = document.getElementById('video-title').value;
+      const url = document.getElementById('video-url').value;
+      const pdf = document.getElementById('video-pdf').value;
+      if(!courseId || !title || !url) return alert("اختر الكورس، واكتب العنوان ورابط اليوتيوب!");
+
+      database.ref(`courses/${courseId}/videos`).push({ title: title, url: url, pdfUrl: pdf, addedAt: firebase.database.ServerValue.TIMESTAMP })
+        .then(() => {
+          alert("تم إضافة الفيديو!");
+          document.getElementById('video-title').value = ''; document.getElementById('video-url').value = ''; document.getElementById('video-pdf').value = '';
+        });
+    });
+
+    document.getElementById('btn-add-assignment').addEventListener('click', function() {
+      const courseId = document.getElementById('assign-course-select').value;
+      const title = document.getElementById('assign-title').value;
+      const desc = document.getElementById('assign-desc').value;
+      const pdfUrl = document.getElementById('assign-pdf').value;
+      if(courseId === '' || title === '') return alert("اختر الكورس واكتب عنوان الواجب!");
+
+      database.ref('assignments').push({ courseId: courseId, title: title, description: desc, pdfUrl: pdfUrl, createdAt: firebase.database.ServerValue.TIMESTAMP })
+        .then(() => {
+          alert("تم الإرسال!");
+          document.getElementById('assign-title').value = ''; document.getElementById('assign-desc').value = ''; document.getElementById('assign-pdf').value = '';
+        });
+    });
+
+    window.gradeAssignment = function(assignId, studentId) {
+      const scoreInput = document.getElementById(`grade-${assignId}-${studentId}`);
+      const score = scoreInput.value;
+      if (!score) return alert("يرجى إدخال الدرجة أولاً!");
+      database.ref('assignments/' + assignId).once('value').then(snap => {
+        const title = snap.exists() ? snap.val().title : 'واجب مقيم';
+        database.ref(`assignment_results/${studentId}/${assignId}`).set({ title: title, score: parseFloat(score), total: 100, date: new Date().toLocaleDateString('ar-EG') })
+          .then(() => { alert('تم رصد الدرجة بنجاح!'); scoreInput.style.borderColor = "var(--green)"; });
+      });
+    };
+
+  
+    const qBuilder = document.getElementById('questions-builder');
+    let qCount = 0;
+    
+  
+    const addQBtn = document.getElementById('btn-add-q-ui');
+    const newAddQBtn = addQBtn.cloneNode(true);
+    addQBtn.parentNode.replaceChild(newAddQBtn, addQBtn);
+
+    newAddQBtn.addEventListener('click', () => {
+      qCount++;
+      const qDiv = document.createElement('div');
+      qDiv.className = 'q-block';
+      qDiv.innerHTML = `
+        <h4 style="color:var(--text); margin-bottom:10px;">سؤال رقم ${qCount}</h4>
+        <input type="text" class="admin-input q-text" placeholder="اكتب نص السؤال هنا" style="margin-bottom:10px;">
+        <input type="text" class="admin-input q-image" placeholder="رابط صورة للسؤال إن وجدت (اختياري)" style="margin-bottom:10px; border-color: #3b82f6;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <input type="text" class="admin-input opt-1" placeholder="الخيار الأول">
+          <input type="text" class="admin-input opt-2" placeholder="الخيار الثاني">
+          <input type="text" class="admin-input opt-3" placeholder="الخيار الثالث">
+          <input type="text" class="admin-input opt-4" placeholder="الخيار الرابع">
+        </div>
+        <input type="text" class="admin-input correct-ans" placeholder="اكتب الإجابة الصحيحة بالظبط كما في الخيارات" style="margin-top:10px; border-color:var(--society-green);">
+      `;
+      qBuilder.appendChild(qDiv);
+    });
+
+    document.getElementById('btn-publish-exam').addEventListener('click', () => {
+      const name = document.getElementById('exam-name').value;
+      const duration = document.getElementById('exam-duration').value;
+      if(!name || !duration) return alert("اكتب اسم الامتحان ومدته!");
+
+      const questions = [];
+      document.querySelectorAll('.q-block').forEach(block => {
+        questions.push({
+          text: block.querySelector('.q-text').value,
+          imageUrl: block.querySelector('.q-image').value || null,
+          options: [ block.querySelector('.opt-1').value, block.querySelector('.opt-2').value, block.querySelector('.opt-3').value, block.querySelector('.opt-4').value ],
+          correctAnswer: block.querySelector('.correct-ans').value
+        });
+      });
+      if(questions.length === 0) return alert("أضف سؤالاً واحداً على الأقل!");
+
+      database.ref('exams').push({ name: name, durationMinutes: parseInt(duration), questions: questions, createdAt: firebase.database.ServerValue.TIMESTAMP })
+        .then(() => { alert("تم النشر!"); document.getElementById('exam-name').value = ''; document.getElementById('exam-duration').value = ''; qBuilder.innerHTML = ''; qCount = 0; });
+    });
+
+    
+    // Realtime Listeners و جداول العرض
+    
+    database.ref('courses').on('value', (snapshot) => {
+      document.getElementById('stat-courses').innerText = snapshot.numChildren();
+      const assignSelect = document.getElementById('assign-course-select');
+      const videoSelect = document.getElementById('video-course-select');
+      const codeSelect = document.getElementById('code-course-select');
+      const coursesTable = document.getElementById('courses-table-body');
+      
+      let optionsHtml = '<option value="">اختر الكورس...</option>';
+      coursesTable.innerHTML = '';
+      window.coursesCache = {}; 
+
+      snapshot.forEach(child => {
+        let c = child.val();
+        let cId = child.key;
+        window.coursesCache[cId] = c; 
+        optionsHtml += `<option value="${cId}">${c.name}</option>`;
+        
+        coursesTable.innerHTML += `
+          <tr>
+            <td style="font-weight:bold;">${c.name}</td>
+            <td>${c.description ? c.description.substring(0,30)+'...' : 'بدون وصف'}</td>
+            <td>
+              <button class="action-icon edit-icon" onclick="editCourse('${cId}')"><i class="fa-solid fa-pen"></i></button>
+              <button class="action-icon delete-icon" onclick="deleteItem('courses', '${cId}')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+
+      assignSelect.innerHTML = optionsHtml; videoSelect.innerHTML = optionsHtml; codeSelect.innerHTML = optionsHtml;
+    });
+
+    database.ref('assignments').on('value', snap => {
+      document.getElementById('stat-assignments').innerText = snap.numChildren();
+      const assigTable = document.getElementById('assignments-list-body');
+      assigTable.innerHTML = '';
+      snap.forEach(child => {
+        let a = child.val();
+        assigTable.innerHTML += `
+          <tr>
+            <td style="font-weight:bold;">${a.title}</td>
+            <td>${a.description ? a.description.substring(0,30)+'...' : ''}</td>
+            <td><button class="action-icon delete-icon" onclick="deleteItem('assignments', '${child.key}')"><i class="fa-solid fa-trash"></i></button></td>
+          </tr>
+        `;
+      });
+    });
+
+    database.ref('exams').on('value', snap => {
+      const examsTable = document.getElementById('exams-list-body');
+      examsTable.innerHTML = '';
+      snap.forEach(child => {
+        examsTable.innerHTML += `
+          <tr>
+            <td style="font-weight:bold;">${child.val().name}</td>
+            <td>${child.val().durationMinutes} دقيقة</td>
+            <td><button class="action-icon delete-icon" onclick="deleteItem('exams', '${child.key}')"><i class="fa-solid fa-trash"></i></button></td>
+          </tr>
+        `;
+      });
+    });
+
+    database.ref('generated_codes').on('value', snap => {
+      document.getElementById('stat-codes').innerText = snap.numChildren();
+      const codesTable = document.getElementById('codes-table-body');
+      codesTable.innerHTML = '';
+      let totalProfits = 0;
+
+      snap.forEach(child => {
+        let code = child.val();
+        let status = code.used ? '<span style="color:var(--red); font-weight:bold;">مستخدم</span>' : '<span style="color:var(--society-green); font-weight:bold;">متاح</span>';
+        if(code.used) { totalProfits += parseInt(code.amount || 0); }
+
+        let actionBtns = code.used ? '-' : `
+          <button class="action-icon edit-icon" onclick="editCode('${child.key}', '${code.courseName}', '${code.amount}')"><i class="fa-solid fa-pen"></i></button>
+          <button class="action-icon delete-icon" onclick="deleteItem('generated_codes', '${child.key}')"><i class="fa-solid fa-trash"></i></button>
+        `;
+
+        codesTable.innerHTML += `
+          <tr>
+            <td style="font-family: monospace; font-weight: bold; color: #3b82f6;">${child.key}</td>
+            <td>${code.courseName || 'كورس'}</td>
+            <td>${code.amount || 0} ج.م</td>
+            <td>${status}</td>
+            <td>${actionBtns}</td>
+          </tr>
+        `;
+      });
+      document.getElementById('stat-profits').innerText = totalProfits + ' ج.م';
+    });
+
+  
+    database.ref('all_exam_results').on('value', snap => {
+      const resultsTable = document.getElementById('exam-results-table-body');
+      resultsTable.innerHTML = '';
+      snap.forEach(examNode => {
+        examNode.forEach(studentNode => {
+          const res = studentNode.val();
+          const sId = studentNode.key;
+          const studentName = window.usersCache[sId] ? window.usersCache[sId].name : 'طالب ('+sId.substring(0,4)+')';
+
+          resultsTable.innerHTML += `
+            <tr>
+              <td style="font-weight:bold;">${studentName}</td>
+              <td>امتحان: ${examNode.key.substring(0,5)}</td>
+              <td style="font-weight:bold; color:var(--red);">${res.score}</td>
+              <td style="color:var(--society-green); font-weight:bold;">${res.percentage}%</td>
+            </tr>
+          `;
+        });
+      });
+    });
+
+    
+    database.ref('assignment_submissions').on('value', snap => {
+      const subTable = document.getElementById('submissions-table-body');
+      subTable.innerHTML = '';
+      snap.forEach(assignNode => {
+        assignNode.forEach(studentNode => {
+          const sub = studentNode.val();
+          const sId = studentNode.key;
+          const studentName = window.usersCache[sId] ? window.usersCache[sId].name : (sub.studentName || 'طالب');
+
+          subTable.innerHTML += `
+            <tr>
+              <td style="font-weight:bold;">${studentName}</td>
+              <td>${assignNode.key.substring(0,5)}...</td>
+              <td>
+                <a href="${sub.answerLink || '#'}" target="_blank" style="color:#3b82f6; text-decoration:none;"><i class="fa-solid fa-link"></i> عرض المرفق</a>
+                <div style="font-size:0.8rem; color:var(--text2); margin-top:5px;">${sub.answerText ? sub.answerText.substring(0,20)+'...' : ''}</div>
+              </td>
+              <td dir="ltr" style="font-size:0.9rem;">${sub.date}</td>
+              <td><input type="number" id="grade-${assignNode.key}-${sId}" class="admin-input" style="width: 80px; padding: 5px; text-align:center;" placeholder="من 100"></td>
+              <td><button class="admin-btn admin-btn-success" style="padding: 8px 15px;" onclick="gradeAssignment('${assignNode.key}', '${sId}')">حفظ</button></td>
+            </tr>
+          `;
+        });
+      });
+    });
+
+  } 
+</script>
+</body>
+</html>
