@@ -7,10 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Josefin+Sans:wght@400;700;900&family=Montserrat:wght@400;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
-  
+
   <style>
     :root {
-      --physics-teal: #1a4f5c; 
+      --physics-teal: #1a4f5c;
       --society-green: #bacb3f;
     }
 
@@ -161,7 +161,7 @@
 
     <div class="assignment-container">
       <div id="loading-msg" style="text-align: center; color: var(--physics-teal); font-weight: bold;">جاري تحميل بيانات الواجب...</div>
-      
+
       <div id="assignment-content" class="assignment-card" style="display: none;">
         <div class="assignment-header">
           <h1 class="assignment-title" id="assign-title">عنوان الواجب</h1>
@@ -209,7 +209,7 @@
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       currentUserId = user.uid;
-      // جلب اسم الطالب
+
       firebase.database().ref('users/' + user.uid).once('value').then(snap => {
         if(snap.exists()){
           currentUserName = snap.val().name;
@@ -235,7 +235,7 @@
         const data = snapshot.val();
         document.getElementById('assign-title').innerText = data.title;
         document.getElementById('assign-desc').innerText = data.description || "لا يوجد وصف إضافي.";
-        
+
         if (data.pdfUrl) {
           document.getElementById('pdf-container').style.display = 'flex';
           document.getElementById('assign-pdf-link').href = data.pdfUrl;
@@ -254,14 +254,13 @@
     e.preventDefault();
     const submitBtn = document.getElementById('submit-btn');
     const msgBox = document.getElementById('msg-box');
-    
+
     const answerText = document.getElementById('answer-text').value;
     const answerLink = document.getElementById('answer-link').value;
 
     submitBtn.disabled = true;
     submitBtn.innerText = "جاري التسليم...";
 
-    // حفظ التسليم في فايربيس
     firebase.database().ref('assignment_submissions/' + assignmentId + '/' + currentUserId).set({
       studentId: currentUserId,
       studentName: currentUserName,
@@ -276,7 +275,7 @@
       msgBox.style.background = "#10b98120";
       msgBox.style.color = "#10b981";
       msgBox.style.border = "1px solid #10b981";
-      
+
       submitBtn.innerText = "تم التسليم";
       // بعد 3 ثواني نرجعه لصفحة الكورس
       setTimeout(() => {

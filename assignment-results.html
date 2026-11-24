@@ -6,9 +6,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
-  
+
   <style>
-   
+
     @media (max-width: 992px) {
       .user-grid {
         display: flex !important;
@@ -38,7 +38,7 @@
       .user-content {
         padding: 10px !important;
       }
-      
+
       table th, table td {
         padding: 10px 5px !important;
         font-size: 0.85rem !important;
@@ -88,15 +88,14 @@
     </div>
 
     <div class="user-grid">
-      
+
       <div class="user-content" style="flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 20px;">
-      
+
         <div id="empty-state" class="empty-state" style="width: 100%;">
           <span class="es-text">لا توجد نتائج واجبات حتى الآن!</span>
           <span class="es-icon" style="color: var(--blue);"></span>
         </div>
 
-        
         <div id="results-container" style="display: none; width: 100%; overflow-x: auto;">
           <h2 style="font-size: 1.2rem; color: var(--text); margin-bottom: 20px;">نتائج الواجبات الخاصة بك</h2>
           <table style="width: 100%; border-collapse: collapse; text-align: right; min-width: 500px;">
@@ -109,7 +108,7 @@
               </tr>
             </thead>
             <tbody id="results-tbody">
-            
+
             </tbody>
           </table>
         </div>
@@ -161,7 +160,7 @@
       <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
     </div>
     <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
-      MHD Powered by 
+      MHD Powered by
     </div>
   </div>
 </footer>
@@ -173,9 +172,9 @@
     document.documentElement.setAttribute('data-theme', nt);
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'light'; 
-    document.documentElement.setAttribute('data-theme', t); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
   })();
 </script>
 
@@ -192,14 +191,14 @@
 
     if (user) {
       const userId = user.uid;
-      
+
       const dbRef = firebase.database().ref('assignment_results/' + userId);
 
       dbRef.on('value', (snapshot) => {
         if (snapshot.exists()) {
           emptyState.style.display = 'none';
           resultsContainer.style.display = 'block';
-          tbody.innerHTML = ''; 
+          tbody.innerHTML = '';
 
           snapshot.forEach((childSnapshot) => {
             const data = childSnapshot.val();
@@ -223,13 +222,13 @@
             tbody.innerHTML += row;
           });
         } else {
-          // مفيش بيانات
+
           emptyState.style.display = 'flex';
           resultsContainer.style.display = 'none';
         }
       });
     } else {
-      // الطالب مش مسجل دخول
+
       emptyState.style.display = 'flex';
       resultsContainer.style.display = 'none';
     }

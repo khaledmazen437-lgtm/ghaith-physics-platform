@@ -35,7 +35,7 @@
       <div class="user-content" style="flex-direction: column; gap: 20px; align-items: flex-start; justify-content: flex-start; padding: 20px;">
         <h2 style="font-size: 1.2rem; color: var(--text);">شحن رصيد / إدخال كود الكورس</h2>
         <p style="font-size: 0.9rem; color: var(--text2); margin-bottom: 10px;">أدخل الكود المكون من 12 أو 16 حرف الذي حصلت عليه لتفعيل الكورس.</p>
-        
+
         <div id="current-user-badge" style="background: var(--bg); padding: 8px; border-radius: 6px; border: 1px dashed var(--physics-teal); color: var(--text2); font-size: 0.85rem; margin-bottom: 15px; text-align: center; width: 100%; max-width: 400px;">
           جاري التحقق من الحساب...
         </div>
@@ -105,9 +105,9 @@
     document.documentElement.setAttribute('data-theme', nt);
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'light'; 
-    document.documentElement.setAttribute('data-theme', t); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
   })();
 </script>
 
@@ -123,8 +123,7 @@
       window.location.href = 'login.html';
       return;
     }
-    
-    // إظهار إيميل الحساب المسجل حالياً عشان لو فيه لخبطة في الـ Localhost تبان
+
     document.getElementById('current-user-badge').innerHTML = `أنت مسجل دخول حالياً بحساب: <b style="color: var(--physics-teal);">${user.email}</b>`;
   });
 
@@ -133,13 +132,11 @@
     const msgDiv = document.getElementById('recharge-msg');
     const btn = document.getElementById('recharge-btn');
 
-    // 1. التأكد إن المستخدم كاتب حاجة
     if (codeInput === '') {
       showMessage('يرجى إدخال الكود أولاً!', 'error');
       return;
     }
 
-    // 2. التأكد من تسجيل الدخول
     const user = firebase.auth().currentUser;
     if (!user) {
       showMessage('يجب تسجيل الدخول أولاً لتفعيل الأكواد.', 'error');
@@ -155,22 +152,19 @@
     btn.disabled = true;
     btn.innerText = 'جاري التحقق...';
 
-    // 3. البحث عن الكود في قاعدة البيانات
     const codeRef = firebase.database().ref('generated_codes/' + codeInput);
-    
+
     codeRef.once('value').then((snapshot) => {
       if (snapshot.exists()) {
         const codeData = snapshot.val();
 
-        // 4. التأكد إن الكود لم يستخدم من قبل
         if (codeData.used === true) {
           showMessage('عذراً، هذا الكود تم استخدامه من قبل.', 'error');
           resetBtn();
           return;
         }
 
-        // 5. الكود سليم! نبدأ عملية التفعيل
-        const courseId = codeData.courseId; 
+        const courseId = codeData.courseId;
         const dateNow = new Date().toLocaleDateString('ar-EG');
 
         // أ) إضافة الكورس لملف الطالب
@@ -185,17 +179,17 @@
         });
 
         // ج) حرق الكود (تحديث حالته لمستخدم وإضافة ID الطالب اللي استخدمه)
-        const burnCodePromise = codeRef.update({ 
-          used: true, 
-          usedBy: userId, 
-          usedAt: firebase.database.ServerValue.TIMESTAMP 
+        const burnCodePromise = codeRef.update({
+          used: true,
+          usedBy: userId,
+          usedAt: firebase.database.ServerValue.TIMESTAMP
         });
 
         // تنفيذ كل العمليات مع بعض
         Promise.all([enrollPromise, invoicePromise, burnCodePromise])
           .then(() => {
             showMessage('تم تفعيل الكود بنجاح! تم إضافة الكورس لحسابك.', 'success');
-            document.getElementById('code-input').value = ''; // تفريغ الخانة
+            document.getElementById('code-input').value = '';
             resetBtn();
           })
           .catch((error) => {
@@ -213,7 +207,6 @@
       resetBtn();
     });
 
-    // دالة مساعدة لعرض الرسائل
     function showMessage(text, type) {
       msgDiv.innerText = text;
       msgDiv.style.display = 'block';
@@ -228,7 +221,6 @@
       }
     }
 
-    // دالة مساعدة لإرجاع الزرار لشكله الطبيعي
     function resetBtn() {
       btn.disabled = false;
       btn.innerText = 'تفعيل';

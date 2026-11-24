@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ملف المستخدم - منصة غيث للفيزياء</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="user-body">
-  
+
   <nav class="user-nav">
     <div class="unav-right">
       <a href="index.html" class="unav-logo">غ<span>ي</span>ث</a>
@@ -70,7 +70,6 @@
     </div>
   </div>
 
-<!-- Footer -->
 <footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
   <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
     <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
@@ -115,13 +114,12 @@
     document.documentElement.setAttribute('data-theme', nt);
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'light'; 
-    document.documentElement.setAttribute('data-theme', t); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
   })();
 </script>
 
-<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -132,23 +130,21 @@
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       const userId = user.uid;
-      
-      // عرض الإيميل (مع إزالة الدومين الوهمي لو كان داخل بكود)
+
       let displayEmail = user.email;
       if (displayEmail && displayEmail.includes('@ghaith.com')) {
         displayEmail = displayEmail.replace('@ghaith.com', ' (كود الدخول)');
       }
       document.getElementById('profile-email').innerText = displayEmail || 'غير متوفر';
 
-      // جلب باقي البيانات من الداتابيز
       firebase.database().ref('users/' + userId).once('value').then((snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
-          
+
           document.getElementById('profile-name').innerText = userData.name || 'طالب منصة غيث';
           document.getElementById('profile-phone').innerText = userData.phone || 'غير مسجل';
           document.getElementById('profile-grade').innerText = userData.grade || 'غير محدد';
-          
+
         } else {
           // لو لسه مفيش داتا في المسار ده
           document.getElementById('profile-name').innerText = 'طالب جديد';
@@ -165,7 +161,7 @@
       document.getElementById('profile-email').innerText = '---';
       document.getElementById('profile-phone').innerText = '---';
       document.getElementById('profile-grade').innerText = '---';
-      // window.location.href = 'login.html'; 
+      // window.location.href = 'login.html';
     }
   });
 </script>
