@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تفاصيل المشاهدات - منصة غيث للفيزياء</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
-  <!-- إضافة مكتبة الأيقونات Font Awesome -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -33,16 +33,14 @@
     </div>
 
     <div class="user-grid">
-      <!-- محتوى المشاهدات -->
+
       <div class="user-content" style="flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 20px;">
-        
-        
+
         <div id="empty-state" class="empty-state" style="width: 100%;">
           <span class="es-text">لا توجد مشاهدات مسجلة حتى الآن!</span>
           <span class="es-icon" style="color: var(--blue);"></span>
         </div>
 
-        
         <div id="views-container" style="display: none; width: 100%; overflow-x: auto;">
           <h2 style="font-size: 1.2rem; color: var(--text); margin-bottom: 20px;">سجل مشاهدة الدروس</h2>
           <table style="width: 100%; border-collapse: collapse; text-align: right; min-width: 500px;">
@@ -55,7 +53,7 @@
               </tr>
             </thead>
             <tbody id="views-tbody">
-              
+
             </tbody>
           </table>
         </div>
@@ -76,13 +74,12 @@
     </div>
   </div>
 
-<!-- Footer -->
 <footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
   <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
     <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
       <span style="font-size: 2rem;">غ</span><span style="color:var(--red);">ي</span>ث
     </div>
-    <!-- أيقونات السوشيال ميديا -->
+
     <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
       <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
         <i class="fa-brands fa-tiktok"></i>
@@ -109,7 +106,7 @@
       <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
     </div>
     <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
-      MHD Powered by 
+      MHD Powered by
     </div>
   </div>
 </footer>
@@ -121,19 +118,17 @@
     document.documentElement.setAttribute('data-theme', nt);
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'light'; 
-    document.documentElement.setAttribute('data-theme', t); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
   })();
 </script>
 
-<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script src="assets/js/firebase-config.js"></script>
 
-<!-- Firebase Views Logic -->
 <script>
   firebase.auth().onAuthStateChanged((user) => {
     const emptyState = document.getElementById('empty-state');
@@ -142,20 +137,20 @@
 
     if (user) {
       const userId = user.uid;
-      
+
       // مسار قاعدة البيانات الخاص بمشاهدات الفيديوهات لهذا الطالب
       const dbRef = firebase.database().ref('video_views/' + userId);
 
       dbRef.on('value', (snapshot) => {
         if (snapshot.exists()) {
-          // إخفاء الـ Empty State وإظهار الجدول
+
           emptyState.style.display = 'none';
           viewsContainer.style.display = 'block';
-          tbody.innerHTML = ''; // تفريغ الجدول
+          tbody.innerHTML = '';
 
           snapshot.forEach((childSnapshot) => {
             const data = childSnapshot.val();
-            
+
             const row = `
               <tr style="border-bottom: 1px solid var(--border); color: var(--text);">
                 <td style="padding: 15px 10px; font-weight: 600;">${data.videoTitle || 'فيديو تعليمي'}</td>
@@ -171,13 +166,13 @@
             tbody.innerHTML += row;
           });
         } else {
-          // مفيش بيانات
+
           emptyState.style.display = 'flex';
           viewsContainer.style.display = 'none';
         }
       });
     } else {
-      // الطالب غير مسجل دخول
+
       emptyState.style.display = 'flex';
       viewsContainer.style.display = 'none';
     }

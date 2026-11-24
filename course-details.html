@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تفاصيل الكورس - منصة غيث للفيزياء</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Josefin+Sans:wght@400;700;900&family=Montserrat:wght@400;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
-  <!-- إضافة مكتبة الأيقونات Font Awesome -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <div class="dash-layout">
-  <!-- Sidebar -->
+
   <aside class="dash-sidebar" id="sidebar">
     <a href="index.html" class="dash-logo">غ<span>ي</span>ث</a>
     <nav class="dash-nav">
@@ -34,13 +34,12 @@
     </nav>
   </aside>
 
-  <!-- Main Content -->
   <main class="dash-main" style="display: flex; flex-direction: column; min-height: 100vh;">
-    <!-- Topbar -->
+
     <header class="dash-topbar">
       <button class="dash-menu-btn" onclick="toggleSidebar()">☰</button>
       <div style="flex:1"></div>
-      
+
       <div class="dash-topbar-right">
         <button id="theme-btn" style="background:transparent;border:none;font-size:1.5rem;cursor:pointer;" onclick="toggleTheme()">🌙</button>
         <div class="dash-user-profile">
@@ -53,22 +52,20 @@
       </div>
     </header>
 
-    <!-- Content Area -->
     <div class="dash-content" style="flex: 1;">
-      
+
       <div class="dash-card" style="padding: 0; overflow: hidden; max-width: 800px; margin: 0 auto;">
-        <!-- Course Cover Image -->
+
         <div style="width: 100%; height: 250px; background: var(--bg2);">
           <img id="course-cover-img" src="https://via.placeholder.com/800x250?text=جاري+التحميل..." alt="Course Cover" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
-        
-        <!-- Course Details -->
+
         <div style="padding: 30px;">
           <h1 id="course-title" style="font-size: 1.8rem; margin-bottom: 10px; color: var(--text);">جاري التحميل...</h1>
           <p id="course-desc" style="font-size: 0.95rem; color: var(--text2); line-height: 1.8; margin-bottom: 20px;">
             يرجى الانتظار بينما نقوم بجلب بيانات الكورس من قاعدة البيانات...
           </p>
-          
+
           <div style="background: rgba(177, 195, 55, 0.1); border-radius: 8px; padding: 15px; margin-bottom: 25px;">
             <h4 style="font-size: 1rem; color: var(--lime); margin-bottom: 10px;">ماذا ستتعلم؟</h4>
             <ul style="list-style-type: none; padding: 0;">
@@ -77,23 +74,22 @@
               <li style="font-size: 0.85rem; color: var(--text2); margin-bottom: 8px;">✓ مقدمة في الديناميكا الحرارية</li>
             </ul>
           </div>
-          
+
           <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 20px;">
             <div style="font-size: 1.5rem; font-weight: bold; color: var(--text);">تواصل للحجز</div>
             <a id="whatsapp-btn" href="#" target="_blank" class="dash-card-btn primary" style="padding: 10px 30px; font-size: 1rem; text-decoration: none; display: inline-block; background: #25D366;">اشترك عبر واتساب</a>
           </div>
         </div>
       </div>
-      
+
     </div>
 
-    <!-- Footer -->
     <footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
       <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
         <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
           <span style="font-size: 2rem;">غ</span><span style="color:var(--red);">ي</span>ث
         </div>
-        
+
         <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
           <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
             <i class="fa-brands fa-tiktok"></i>
@@ -120,7 +116,7 @@
           <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
         </div>
         <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
-          MHD Powered by 
+          MHD Powered by
         </div>
       </div>
     </footer>
@@ -128,7 +124,7 @@
 </div>
 
 <script>
-  // Theme Toggle Logic
+
   function toggleTheme() {
     const t = document.documentElement.getAttribute('data-theme');
     const nt = t === 'dark' ? 'light' : 'dark';
@@ -136,22 +132,20 @@
     document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
-    document.documentElement.setAttribute('data-theme', t); 
-    setTimeout(() => { 
-      const b = document.getElementById('theme-btn'); 
-      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
-    }, 100); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    setTimeout(() => {
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️';
+    }, 100);
   })();
 
-  
   function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
   }
 </script>
 
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -159,7 +153,7 @@
 
 <!-- Firebase Course Details & User Logic -->
 <script>
-  // 1. جلب بيانات الطالب (الاسم والصورة) في الهيدر
+
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       firebase.database().ref('users/' + user.uid).once('value').then((snapshot) => {
@@ -175,32 +169,28 @@
     }
   });
 
-
   // (مثال للرابط: course-details.html?id=-NjXa9s2ksjdhKds)
   const urlParams = new URLSearchParams(window.location.search);
   const courseId = urlParams.get('id');
 
   if (courseId) {
-    // 3. جلب بيانات الكورس من فايربيس بناءً على الـ ID
+
     firebase.database().ref('courses/' + courseId).once('value').then((snapshot) => {
       if (snapshot.exists()) {
         const course = snapshot.val();
-        
-        // عرض اسم الكورس ووصفه
+
         document.getElementById('course-title').innerText = course.name;
         document.getElementById('course-desc').innerText = course.description || "لا يوجد وصف متاح لهذا الكورس.";
-        
-        
+
         if (course.coverUrl) {
           document.getElementById('course-cover-img').src = course.coverUrl;
         } else {
           document.getElementById('course-cover-img').src = `https://via.placeholder.com/800x250?text=${encodeURIComponent(course.name)}`;
         }
 
-        // تحديث رابط الواتساب عشان يتبعت باسم الكورس
         const waMessage = encodeURIComponent(`أهلاً يا مستر، أريد الاشتراك في كورس: ${course.name}`);
         document.getElementById('whatsapp-btn').href = `https://wa.me/201212897212?text=${waMessage}`;
-        
+
       } else {
         // الكورس اتمسح أو غير موجود
         document.getElementById('course-title').innerText = "عذراً، الكورس غير موجود!";

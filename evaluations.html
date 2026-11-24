@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>التقييم - منصة غيث للفيزياء</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Josefin+Sans:wght@400;700;900&family=Montserrat:wght@400;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
-  <!-- إضافة مكتبة الأيقونات Font Awesome -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <div class="dash-layout">
-  <!-- Sidebar -->
+
   <aside class="dash-sidebar" id="sidebar">
     <a href="index.html" class="dash-logo">غ<span>ي</span>ث</a>
     <nav class="dash-nav">
@@ -34,13 +34,12 @@
     </nav>
   </aside>
 
-  <!-- Main Content -->
   <main class="dash-main" style="display: flex; flex-direction: column; min-height: 100vh;">
-    <!-- Topbar -->
+
     <header class="dash-topbar">
       <button class="dash-menu-btn" onclick="toggleSidebar()">☰</button>
       <div style="flex:1"></div>
-      
+
       <div class="dash-topbar-right">
         <button id="theme-btn" style="background:transparent;border:none;font-size:1.5rem;cursor:pointer;" onclick="toggleTheme()">🌙</button>
         <div class="dash-user-profile">
@@ -53,10 +52,8 @@
       </div>
     </header>
 
-    <!-- Content Area -->
     <div class="dash-content" style="flex: 1;">
-      
-      <!-- Welcome Banner -->
+
       <div class="dash-banner">
         <div class="dash-banner-text">
           <h1 style="font-size: 1.5rem;">تقييمي</h1>
@@ -66,7 +63,7 @@
 
       <!-- شبكة التقييمات (التي سيتم حقنها من قاعدة البيانات) -->
       <div class="dash-grid" id="evaluations-grid">
-        <!-- رسالة تحميل مبدئية -->
+
         <div class="dash-card" style="text-align: center; padding: 2rem; grid-column: 1/-1;">
           <h3 style="font-size: 1.1rem; color: var(--text);">جاري تحليل مستواك...</h3>
           <p style="font-size: 0.9rem; color: var(--text2);">يتم الآن جلب نتائج الامتحانات والواجبات الخاصة بك.</p>
@@ -74,7 +71,6 @@
       </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; border-radius: 12px; width: 100%;">
       <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
         <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:2.5rem; font-weight:700;">
@@ -106,7 +102,7 @@
           <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
         </div>
         <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
-          MHD Powered by 
+          MHD Powered by
         </div>
       </div>
     </footer>
@@ -114,7 +110,7 @@
 </div>
 
 <script>
-  // Theme Toggle Logic
+
   function toggleTheme() {
     const t = document.documentElement.getAttribute('data-theme');
     const nt = t === 'dark' ? 'light' : 'dark';
@@ -122,13 +118,13 @@
     document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
-    document.documentElement.setAttribute('data-theme', t); 
-    setTimeout(() => { 
-      const b = document.getElementById('theme-btn'); 
-      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
-    }, 100); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    setTimeout(() => {
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️';
+    }, 100);
   })();
 
   // Sidebar Toggle Logic for Mobile
@@ -137,19 +133,16 @@
   }
 </script>
 
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script src="assets/js/firebase-config.js"></script>
 
-<!-- Firebase Evaluations Logic -->
 <script>
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       const userId = user.uid;
 
-      // 1. جلب بيانات الطالب للـ Header
       firebase.database().ref('users/' + userId).once('value').then((snapshot) => {
         if(snapshot.exists()){
           const userData = snapshot.val();
@@ -161,31 +154,29 @@
         }
       });
 
-      // 2. جلب التقييمات (الواجبات والامتحانات) في نفس الوقت
       const evaluationsGrid = document.getElementById('evaluations-grid');
-      
+
       const assignmentsRef = firebase.database().ref('assignment_results/' + userId).once('value');
       const examsRef = firebase.database().ref('exam_results/' + userId).once('value');
 
       Promise.all([assignmentsRef, examsRef]).then(([assignmentsSnap, examsSnap]) => {
-        evaluationsGrid.innerHTML = ''; // تفريغ رسالة التحميل المبدئية
+        evaluationsGrid.innerHTML = '';
         let resultsFound = false;
 
-        // دالة لرسم كارت التقييم بنفس تصميمك
         const renderCard = (title, scoreValue, totalValue, type) => {
           resultsFound = true;
-          // حساب النسبة المئوية (لو مفيش إجمالي نفترض إنه من 100)
+
           let score = parseFloat(scoreValue) || 0;
           let total = parseFloat(totalValue) || 100;
           let percentage = Math.round((score / total) * 100);
 
           // تحديد الألوان والرسائل التحفيزية بناءً على النسبة
-          let numColor = 'var(--red)'; // افتراضي في تصميمك
+          let numColor = 'var(--red)';
           let msgColor = 'var(--text2)';
           let msg = '';
 
           if (percentage >= 85) {
-            numColor = 'var(--red)'; 
+            numColor = 'var(--red)';
             msgColor = 'var(--green)';
             msg = 'ممتاز! استمر في هذا الأداء الرائع.';
           } else if (percentage >= 50) {
@@ -209,7 +200,6 @@
           evaluationsGrid.innerHTML += cardHtml;
         };
 
-        // معالجة بيانات الواجبات
         if (assignmentsSnap.exists()) {
           assignmentsSnap.forEach(child => {
             let data = child.val();
@@ -217,7 +207,6 @@
           });
         }
 
-        // معالجة بيانات الامتحانات
         if (examsSnap.exists()) {
           examsSnap.forEach(child => {
             let data = child.val();
@@ -240,7 +229,7 @@
       });
 
     } else {
-     
+
     }
   });
 </script>

@@ -36,7 +36,7 @@
     <header class="dash-topbar">
       <button class="dash-menu-btn" onclick="toggleSidebar()">☰</button>
       <div style="flex:1"></div>
-      
+
       <div class="dash-topbar-right">
         <button id="theme-btn" style="background:transparent;border:none;font-size:1.5rem;cursor:pointer;" onclick="toggleTheme()">🌙</button>
         <div class="dash-user-profile">
@@ -50,7 +50,7 @@
     </header>
 
     <div class="dash-content" style="flex: 1;">
-      
+
       <div class="dash-banner">
         <div class="dash-banner-text">
           <h1 style="font-size: 1.5rem;">أهلاً بك يا بطل!</h1>
@@ -109,7 +109,7 @@
           <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
         </div>
         <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
-          MHD Powered by 
+          MHD Powered by
         </div>
       </div>
     </footer>
@@ -117,7 +117,7 @@
 </div>
 
 <script>
-  // Theme Toggle Logic
+
   function toggleTheme() {
     const t = document.documentElement.getAttribute('data-theme');
     const nt = t === 'dark' ? 'light' : 'dark';
@@ -125,13 +125,13 @@
     document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
-    document.documentElement.setAttribute('data-theme', t); 
-    setTimeout(() => { 
-      const b = document.getElementById('theme-btn'); 
-      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
-    }, 100); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    setTimeout(() => {
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️';
+    }, 100);
   })();
 
   // Sidebar Toggle Logic for Mobile
@@ -150,7 +150,6 @@
     if (user) {
       const userId = user.uid;
 
-      // 1. جلب بيانات الطالب (الاسم والصف والصورة)
       firebase.database().ref('users/' + userId).once('value').then((snapshot) => {
         if(snapshot.exists()){
           const userData = snapshot.val();
@@ -162,18 +161,16 @@
         }
       });
 
-      // 2. جلب الكورسات المشترك فيها لعرضها في الداش بورد
       const coursesGrid = document.getElementById('dashboard-courses-grid');
       firebase.database().ref('enrolled_courses/' + userId).on('value', (snapshot) => {
-        coursesGrid.innerHTML = ''; // تفريغ الكروت الافتراضية
+        coursesGrid.innerHTML = '';
         if (snapshot.exists()) {
           snapshot.forEach((childSnapshot) => {
             const courseId = childSnapshot.key;
             firebase.database().ref('courses/' + courseId).once('value').then((courseSnap) => {
               if(courseSnap.exists()){
                 const course = courseSnap.val();
-                
-                // حقن كارت الكورس
+
                 // زرار "استكمال الكورس" يوجه الطالب لصفحة محتوى الكورس اللي هتعرض الدروس
                 const courseCard = `
                   <div class="dash-card">
@@ -197,7 +194,7 @@
             });
           });
         } else {
-          // كارت شيك يوجه الطالب لصفحة courses.html لو مش مشترك في أي كورس
+
           coursesGrid.innerHTML = `
             <div class="dash-card" style="grid-column: 1/-1; text-align: center; padding: 40px 20px;">
               <div class="dash-card-icon" style="margin: 0 auto 15px; color: var(--gold); background: rgba(216, 229, 138, 0.1);">🛒</div>
@@ -209,15 +206,14 @@
         }
       });
 
-      // 3. جلب الامتحانات القادمة من قاعدة البيانات
       const examsGrid = document.getElementById('dashboard-exams-grid');
       firebase.database().ref('exams').on('value', (snapshot) => {
-        examsGrid.innerHTML = ''; // تفريغ
+        examsGrid.innerHTML = '';
         if (snapshot.exists()) {
           snapshot.forEach((childSnapshot) => {
             const exam = childSnapshot.val();
             const examId = childSnapshot.key;
-            
+
             // حقن كارت الامتحان بنفس تصميمك
             const examCard = `
               <div class="dash-card">

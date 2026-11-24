@@ -23,7 +23,7 @@
   <div class="auth-form-side">
     <div class="auth-form-wrap" style="max-width: 450px;">
       <h2 class="auth-title">مرحباً بك مجدداً </h2>
-      
+
       <div id="error-message" style="display: none; background: #ef444420; color: var(--red); padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; text-align: right; border: 1px solid var(--red);"></div>
 
       <form id="login-form">
@@ -31,16 +31,16 @@
           <label>البريد الإلكتروني أو كود الطالب 📧</label>
           <input type="text" id="login-email" required placeholder="أدخل بريدك الإلكتروني أو كودك">
         </div>
-        
+
         <div class="auth-input-group">
           <label>كلمة السر 🔒</label>
           <input type="password" id="login-password" required placeholder="أدخل كلمة السر">
         </div>
-        
+
         <div style="text-align:left; margin-bottom: 20px;">
           <a href="#" style="color:var(--red); font-family:'Cairo',sans-serif; text-decoration:none; font-weight:700;">نسيت كلمة السر؟</a>
         </div>
-        
+
         <button type="submit" id="login-btn" class="auth-submit">تسجيل الدخول</button>
       </form>
     </div>
@@ -99,13 +99,13 @@
     document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
-    document.documentElement.setAttribute('data-theme', t); 
-    setTimeout(() => { 
-      const b = document.getElementById('theme-btn'); 
-      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
-    }, 100); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    setTimeout(() => {
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️';
+    }, 100);
   })();
 </script>
 
@@ -115,13 +115,12 @@
 <script src="assets/js/firebase-config.js"></script>
 
 <script>
- 
+
   const urlParams = new URLSearchParams(window.location.search);
   if(urlParams.get('logout') === 'true') {
       firebase.auth().signOut();
   }
 
-  // التحقق لو الطالب مسجل دخول أصلاً يوديه للداش بورد أوتوماتيك
   firebase.auth().onAuthStateChanged((user) => {
     if (user && urlParams.get('logout') !== 'true') {
       window.location.href = 'dashboard.html';
@@ -130,7 +129,7 @@
 
   document.getElementById('login-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     const rawEmailOrCode = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
     const errorMsgDiv = document.getElementById('error-message');
@@ -146,7 +145,6 @@
     loginBtn.disabled = true;
     errorMsgDiv.style.display = 'none';
 
-    // عملية تسجيل الدخول بفايربيس
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         window.location.href = 'dashboard.html';
@@ -157,9 +155,9 @@
 
         const errorCode = error.code;
         const errorMessage = error.message;
-        
+
         let friendlyMessage = 'حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى.';
-        
+
         // ترجمة رسائل فايربيس للعربي وتغطية التحديث الأمني الأخير
         if (errorCode === 'auth/invalid-credential' || errorMessage.includes('INVALID_LOGIN_CREDENTIALS')) {
           friendlyMessage = 'بيانات الدخول غير صحيحة، يرجى التأكد من البريد وكلمة السر.';

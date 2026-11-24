@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="user-body">
-  
+
   <nav class="user-nav">
     <div class="unav-right">
       <a href="index.html" class="unav-logo">غ<span>ي</span>ث</a>
@@ -34,7 +34,7 @@
 
     <div class="user-grid">
       <div class="user-content" style="flex-direction: column; align-items: flex-start; padding: 20px;">
-        
+
         <div id="empty-state" class="empty-state" style="width: 100%;">
           <span class="es-text" id="empty-text">جاري تحميل الكورسات...</span>
           <span class="es-icon"><i class="fa-solid fa-spinner fa-spin"></i></span>
@@ -90,22 +90,22 @@
       <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
     </div>
     <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
-      MHD Powered by 
+      MHD Powered by
     </div>
   </div>
 </footer>
 
 <script>
-  // Theme Toggle Logic
+
   function toggleTheme() {
     const t = document.documentElement.getAttribute('data-theme');
     const nt = t === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', nt);
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'light'; 
-    document.documentElement.setAttribute('data-theme', t); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
   })();
 </script>
 
@@ -122,27 +122,23 @@
 
     if (user) {
       const userId = user.uid;
-      
-      // 1. جلب الكورسات اللي الطالب مشترك فيها فعلاً عشان نغير شكل الزرار
+
       firebase.database().ref('enrolled_courses/' + userId).on('value', (enrolledSnap) => {
         const enrolledCourses = enrolledSnap.exists() ? enrolledSnap.val() : {};
 
-        // 2. جلب كل الكورسات المتاحة على المنصة (اللي الأدمن ضافها)
         firebase.database().ref('courses').on('value', (coursesSnap) => {
           if (coursesSnap.exists()) {
             emptyState.style.display = 'none';
             coursesContainer.style.display = 'grid';
-            coursesContainer.innerHTML = ''; // تفريغ الحاوية القديمة
+            coursesContainer.innerHTML = '';
 
             // المرور على كل كورس في المنصة
             coursesSnap.forEach((childSnapshot) => {
               const courseId = childSnapshot.key;
               const course = childSnapshot.val();
-              
-              // تحديد صورة الغلاف
+
               const cover = course.coverUrl ? course.coverUrl : `https://via.placeholder.com/300x150?text=${encodeURIComponent(course.name)}`;
 
-              // فحص هل الطالب مشترك في الكورس ده ولا لأ
               const isEnrolled = enrolledCourses[courseId];
 
               // تحديد شكل الزرار واللينك بتاعه بناءً على اشتراك الطالب
@@ -154,7 +150,7 @@
                   </a>
                 `;
               } else {
-              
+
                 actionButton = `
                   <a href="course-details.html?id=${courseId}" style="display: block; text-align: center; background: #3b82f6; color: #fff; padding: 10px; border-radius: 6px; text-decoration: none; font-family: 'Cairo'; font-weight: bold; font-size: 0.95rem;">
                     <i class="fa-solid fa-circle-info"></i> التفاصيل والاشتراك
@@ -162,7 +158,6 @@
                 `;
               }
 
-              // تصميم كارت الكورس
               const courseCard = `
                 <div style="background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s;">
                   <img src="${cover}" alt="Course Cover" style="width: 100%; height: 150px; object-fit: cover;">
@@ -175,7 +170,7 @@
                   </div>
                 </div>
               `;
-              
+
               coursesContainer.innerHTML += courseCard;
             });
           } else {

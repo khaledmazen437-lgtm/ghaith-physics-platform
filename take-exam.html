@@ -7,10 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
-  
+
   <style>
     :root {
-      --physics-teal: #1a4f5c; 
+      --physics-teal: #1a4f5c;
       --society-green: #bacb3f;
     }
 
@@ -103,7 +103,6 @@
       border-color: var(--physics-teal);
     }
 
-    /* اخفاء الـ radio button الأصلي */
     .option-label input[type="radio"] {
       display: none;
     }
@@ -210,7 +209,6 @@
   let examData = null;
   let timerInterval;
 
-  // 1. التحقق من تسجيل الدخول
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       currentUserId = user.uid;
@@ -220,7 +218,6 @@
     }
   });
 
-  // 2. التحقق لو الطالب امتحن قبل كده (عشان ميغشش ويمتحن تاني)
   function checkIfAlreadyTaken() {
     firebase.database().ref(`exam_results/${currentUserId}/${currentExamId}`).once('value').then(snap => {
       if (snap.exists()) {
@@ -232,7 +229,6 @@
     });
   }
 
-  // 3. جلب بيانات الامتحان
   function loadExam() {
     if (!currentExamId) {
       alert("رابط الامتحان غير صحيح.");
@@ -243,8 +239,7 @@
     firebase.database().ref('exams/' + currentExamId).once('value').then((snapshot) => {
       if (snapshot.exists()) {
         examData = snapshot.val();
-        
-        // التأكد إن فيه أسئلة
+
         if (!examData.questions || examData.questions.length === 0) {
           alert("هذا الامتحان لا يحتوي على أسئلة بعد.");
           window.location.href = 'dashboard.html';
@@ -259,18 +254,17 @@
     });
   }
 
-  // 4. رسم الأسئلة على الشاشة
   function renderExam() {
     document.getElementById('display-exam-name').innerText = examData.name;
     document.getElementById('display-exam-info').innerText = `عدد الأسئلة: ${examData.questions.length}`;
-    
+
     const container = document.getElementById('questions-container');
     container.innerHTML = '';
 
     examData.questions.forEach((q, index) => {
       const qCard = document.createElement('div');
       qCard.className = 'question-card';
-      
+
       let optionsHtml = '';
       // نفترض إن الخيارات مصفوفة في الداتابيز
       if(q.options && Array.isArray(q.options)) {
@@ -297,7 +291,6 @@
     document.getElementById('loading-msg').style.display = 'none';
     document.getElementById('exam-form').style.display = 'block';
 
-    // بدء التايمر
     startTimer(examData.durationMinutes || 30);
   }
 
@@ -306,14 +299,12 @@
     // إزالة التحديد من باقي الخيارات في نفس السؤال
     const allLabels = labelElement.parentElement.querySelectorAll('.option-label');
     allLabels.forEach(lbl => lbl.classList.remove('selected'));
-    
-    // إضافة التحديد للجديد
+
     labelElement.classList.add('selected');
   }
 
-  // 5. التايمر (العداد التنازلي)
   function startTimer(minutes) {
-    let time = minutes * 60; // تحويل لثواني
+    let time = minutes * 60;
     const display = document.getElementById('time-left');
 
     timerInterval = setInterval(() => {
@@ -330,7 +321,7 @@
         alert("انتهى الوقت! سيتم تسليم إجاباتك الحالية تلقائياً.");
         document.getElementById('exam-form').dispatchEvent(new Event('submit'));
       }
-      
+
       // تغيير لون التايمر للأحمر لو فاضل أقل من 5 دقايق
       if(time <= 300) {
         document.getElementById('timer-display').style.color = 'var(--red)';
@@ -341,11 +332,10 @@
     }, 1000);
   }
 
-  // 6. تسليم الامتحان والتصحيح التلقائي
   document.getElementById('exam-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    clearInterval(timerInterval); // إيقاف التايمر
-    
+    clearInterval(timerInterval);
+
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = true;
     submitBtn.innerText = "جاري التصحيح وإرسال النتيجة...";
@@ -353,9 +343,8 @@
     let score = 0;
     const total = examData.questions.length;
 
-    // استخراج الإجابات من الفورم
     const formData = new FormData(this);
-    
+
     examData.questions.forEach((q, index) => {
       const studentAnswer = formData.get(`q${index}`);
       // التصحيح: مقارنة إجابة الطالب بالإجابة الصحيحة المتسجلة في الداتابيز
@@ -366,7 +355,6 @@
 
     const percentage = Math.round((score / total) * 100);
 
-    // حفظ النتيجة في فايربيس تحت مسار exam_results/userId/examId
     firebase.database().ref(`exam_results/${currentUserId}/${currentExamId}`).set({
       examName: examData.name,
       score: score,
@@ -375,7 +363,7 @@
       date: new Date().toLocaleDateString('ar-EG'),
       timestamp: firebase.database.ServerValue.TIMESTAMP
     }).then(() => {
-      // حفظ في المسار العام برضو عشان لو الأدمن عايز يشوف كل درجات الطلاب
+
       firebase.database().ref(`all_exam_results/${currentExamId}/${currentUserId}`).set({
         score: score,
         percentage: percentage,

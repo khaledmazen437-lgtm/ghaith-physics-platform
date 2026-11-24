@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>انشاء حساب - منصة غيث للفيزياء</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Josefin+Sans:wght@400;700;900&family=Montserrat:wght@400;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
-  <!-- إضافة مكتبة الأيقونات Font Awesome -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <div class="auth-page">
-  <!-- Header -->
+
   <header class="auth-header">
     <a href="index.html" class="auth-logo">غ<span>ي</span>ث</a>
     <div class="auth-nav">
@@ -22,10 +22,9 @@
     </div>
   </header>
 
-  <!-- Form Side -->
   <div class="auth-form-side">
     <div class="auth-form-wrap">
-      
+
       <!-- رسالة التنبيه (نجاح أو خطأ) مخفية افتراضياً -->
       <div id="reg-msg" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-family: 'Cairo', sans-serif; font-size: 0.9rem; text-align: center;"></div>
 
@@ -40,7 +39,7 @@
             <input type="text" id="reg-sname" required>
           </div>
         </div>
-        
+
         <div class="auth-row">
           <div class="auth-input-group">
             <label>الاسم الثالث 👤</label>
@@ -51,12 +50,12 @@
             <input type="text" id="reg-lname" required>
           </div>
         </div>
-        
+
         <div class="auth-input-group">
           <label>رقم الهاتف 📞</label>
           <input type="tel" id="reg-phone" required>
         </div>
-        
+
         <div class="auth-row">
           <div class="auth-input-group">
             <label>رقم هاتف الأب 📞</label>
@@ -67,7 +66,7 @@
             <input type="tel" id="reg-mphone" required>
           </div>
         </div>
-        
+
         <div class="auth-input-group">
           <label>المحافظة</label>
           <select id="reg-gov" required>
@@ -98,7 +97,7 @@
             <option>شمال سيناء</option>
           </select>
         </div>
-        
+
         <div class="auth-input-group">
           <label>النوع</label>
           <select id="reg-gender" required>
@@ -107,7 +106,7 @@
             <option>أنثى</option>
           </select>
         </div>
-        
+
         <div class="auth-input-group">
           <label>الصف الدراسي</label>
           <select id="reg-grade" required>
@@ -117,7 +116,7 @@
             <option>الصف الثالث الثانوي</option>
           </select>
         </div>
-        
+
         <div class="auth-input-group">
           <label>الشعبة</label>
           <select id="reg-track" required>
@@ -128,12 +127,12 @@
             <option>عام (للصف الأول/الثاني)</option>
           </select>
         </div>
-        
+
         <div class="auth-input-group">
           <label>البريد الإلكتروني 📧</label>
           <input type="email" id="reg-email" required>
         </div>
-        
+
         <div class="auth-row">
           <div class="auth-input-group">
             <label>كلمة السر 🔒</label>
@@ -144,13 +143,12 @@
             <input type="password" id="reg-confirm" required minlength="6">
           </div>
         </div>
-        
+
         <button type="submit" id="reg-submit-btn" class="auth-submit">انشاء حساب</button>
       </form>
     </div>
   </div>
 
-  <!-- Visual Side -->
   <div class="auth-visual-side">
     <div class="auth-visual-bg">اعملك اكونت وانجز</div>
     <svg class="auth-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -160,13 +158,12 @@
   </div>
 </div>
 
-<!-- Footer -->
 <footer class="footer" style="position:relative;overflow:hidden; background: var(--dark-teal); color: #fff; padding: 40px 20px; text-align: center; margin-top: auto; width: 100%;">
   <div class="footer-inner" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px;">
     <div class="footer-logo" style="font-family:'Reem Kufi',sans-serif; font-size:3rem; font-weight:700;">
       <span style="font-size: 2rem;">غ</span><span style="color:var(--red);">ي</span>ث
     </div>
-    <!-- تعديل الأيقونات هنا -->
+
     <div class="footer-socials" style="display: flex; gap: 15px; margin: 10px 0;">
       <a href="#" style="width: 40px; height: 40px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem;">
         <i class="fa-brands fa-tiktok"></i>
@@ -193,7 +190,7 @@
       <span>&lt; All Copy Rights Reserved @2026 &gt;</span>
     </div>
     <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
-      MHD Powered by 
+      MHD Powered by
     </div>
   </div>
 </footer>
@@ -206,28 +203,25 @@
     document.getElementById('theme-btn').textContent = nt === 'dark' ? '🌙' : '☀️';
     localStorage.setItem('ghaith_theme', nt);
   }
-  (function () { 
-    const t = localStorage.getItem('ghaith_theme') || 'dark'; 
-    document.documentElement.setAttribute('data-theme', t); 
-    setTimeout(() => { 
-      const b = document.getElementById('theme-btn'); 
-      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; 
-    }, 100); 
+  (function () {
+    const t = localStorage.getItem('ghaith_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    setTimeout(() => {
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = t === 'dark' ? '🌙' : '☀️';
+    }, 100);
   })();
 </script>
 
-<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script src="assets/js/firebase-config.js"></script>
 
-<!-- Firebase Registration Logic -->
 <script>
   document.getElementById('register-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    // سحب البيانات من الخانات
+
     const fname = document.getElementById('reg-fname').value.trim();
     const sname = document.getElementById('reg-sname').value.trim();
     const tname = document.getElementById('reg-tname').value.trim();
@@ -246,24 +240,20 @@
     const msgDiv = document.getElementById('reg-msg');
     const submitBtn = document.getElementById('reg-submit-btn');
 
-    // 1. التأكد من تطابق كلمة السر
     if (password !== confirmPassword) {
       showMessage('كلمتا السر غير متطابقتين!', 'error');
       return;
     }
 
-    
     submitBtn.disabled = true;
     submitBtn.innerText = 'جاري إنشاء الحساب...';
     msgDiv.style.display = 'none';
 
-    // 3. إنشاء الحساب في فايربيس
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         const fullName = `${fname} ${sname} ${tname} ${lname}`;
 
-        // 4. حفظ باقي البيانات في قاعدة البيانات
         return firebase.database().ref('users/' + user.uid).set({
           name: fullName,
           phone: phone,
@@ -274,18 +264,18 @@
           grade: grade,
           track: track,
           email: email,
-          role: 'student', 
+          role: 'student',
           createdAt: firebase.database.ServerValue.TIMESTAMP
         });
       })
       .then(() => {
-        
+
         firebase.auth().signOut().then(() => {
           showMessage('تم التسجيل بنجاح! سيتم تحويلك لصفحة تسجيل الدخول...', 'success');
-          
+
           setTimeout(() => {
-            window.location.href = 'login.html'; 
-          }, 3000); 
+            window.location.href = 'login.html';
+          }, 3000);
         });
       })
       .catch((error) => {
@@ -298,12 +288,11 @@
         } else if (error.code === 'auth/weak-password') {
           errorMessage = 'كلمة السر ضعيفة جداً، يجب أن تكون 6 أحرف على الأقل.';
         }
-        
+
         showMessage(errorMessage, 'error');
       });
   });
 
-  // دالة مساعدة لعرض الرسائل
   function showMessage(text, type) {
     const msgDiv = document.getElementById('reg-msg');
     msgDiv.innerText = text;

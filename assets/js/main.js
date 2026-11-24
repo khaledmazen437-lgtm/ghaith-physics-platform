@@ -1,5 +1,3 @@
-
-    
     function toggleTheme() {
       const t = document.documentElement.getAttribute('data-theme');
       const nt = t === 'dark' ? 'light' : 'dark';
@@ -9,7 +7,7 @@
     }
     (function () { const t = localStorage.getItem('ghaith_theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); setTimeout(() => { const b = document.getElementById('theme-btn'); if (b) b.textContent = t === 'dark' ? '🌙' : '☀️'; }, 100); })();
 
-    // ===== HERO 3D CIRCUIT CANVAS 
+    // ===== HERO 3D CIRCUIT CANVAS
     (function () {
       const c = document.getElementById('hero-3d-canvas');
       if (!c) return;
@@ -20,16 +18,16 @@
       let angleY = 0;
       let angleX = 0;
 
-      function resize() { 
+      function resize() {
         if (c.parentElement) {
-          W = c.width = c.parentElement.clientWidth; 
-          H = c.height = c.parentElement.clientHeight; 
+          W = c.width = c.parentElement.clientWidth;
+          H = c.height = c.parentElement.clientHeight;
         } else {
           W = c.width = window.innerWidth;
           H = c.height = window.innerHeight;
         }
       }
-      resize(); 
+      resize();
       window.addEventListener('resize', resize);
 
       for (let i = 0; i < numNodes; i++) {
@@ -68,7 +66,7 @@
 
           let x1 = node.x * cosY - node.z * sinY;
           let z1 = node.z * cosY + node.x * sinY;
-          
+
           let y1 = node.y * cosX - z1 * sinX;
           let z2 = z1 * cosX + node.y * sinX;
 
@@ -112,11 +110,9 @@
       draw();
     })();
 
-    // ===== SCROLL REVEAL 
     const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.1 });
     document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
 
-    // ===== DATA 
     const GN = { first: 'الأول الثانوي', second: 'الثاني الثانوي', third: 'الثالث الثانوي' };
     const GC = { first: 'A', second: 'B', third: 'C' };
     let db = {
@@ -160,9 +156,6 @@
     ];
     let qz = { cur: 0, score: 0, timer: null, timeLeft: 0, qid: null };
 
-    
-
-    // Firebase refs
     let firebaseApp, firebaseDB, dbRef;
     let firebaseReady = false;
     let unsubscribeListener = null;
@@ -177,22 +170,18 @@
         dbRef = ref(firebaseDB, 'ghaith');
         firebaseReady = true;
 
-        // ===== REAL-TIME LISTENER
-        
         onValue(dbRef, (snapshot) => {
           const data = snapshot.val();
           if (!data) return;
 
-          // تحديث الطلاب
           if (data.students) {
             const remoteStudents = Object.values(data.students);
 
-            
             if (db.role === 'student' && db.cur) {
               const updated = remoteStudents.find(s => s.code === db.cur.code);
               if (updated) {
                 db.cur = updated;
-                
+
                 if (typeof loadSHome === 'function') {
                   try { loadSHome(); } catch (e) { }
                 }
@@ -202,7 +191,6 @@
             db.students = remoteStudents;
             updateCounts();
 
-          
             if (db.role === 'admin') {
               const activeTab = document.querySelector('#admin-page .sb-item.active');
               if (activeTab) {
@@ -214,18 +202,15 @@
             }
           }
 
-          
           if (data.warnings) db.warnings = Object.values(data.warnings);
           if (data.broadcasts) db.broadcasts = Object.values(data.broadcasts);
           if (data.schedule) db.schedule = data.schedule;
           if (data.subPrices) { db.subPrices = data.subPrices; updatePrices(); }
         });
 
-        
         window.saveData = saveDataFirebase;
         window.loadData = loadDataFirebase;
 
-        
         await loadDataFirebase();
 
         console.log(' Firebase متصل وجاهز');
@@ -237,14 +222,13 @@
 
     async function saveDataFirebase() {
       if (!firebaseReady || !firebaseDB) {
-        // fallback
+
         try { localStorage.setItem('ghaith_db_students', JSON.stringify(db.students)); } catch (e) { }
         return;
       }
       try {
         const { ref, set } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
 
-        
         const studentsObj = {};
         db.students.forEach(s => { studentsObj[s.code] = s; });
 
@@ -266,14 +250,14 @@
         });
       } catch (err) {
         console.error('Firebase save error:', err);
-        // fallback
+
         try { localStorage.setItem('ghaith_db_students', JSON.stringify(db.students)); } catch (e) { }
       }
     }
 
     async function loadDataFirebase() {
       if (!firebaseReady || !firebaseDB) {
-      
+
         try {
           const d = JSON.parse(localStorage.getItem('ghaith_db_students'));
           if (d && d.length > 0) db.students = d;
@@ -301,13 +285,12 @@
     // ===== SESSION (localStorage فقط للجلسة) =====
     function saveSession() { try { localStorage.setItem('ghaith_session', JSON.stringify({ cur: db.cur ? { code: db.cur.code } : null, role: db.role })); } catch (e) { } }
     function loadSession() { try { const s = JSON.parse(localStorage.getItem('ghaith_session')); if (s && s.cur && s.role) { const st = db.students.find(x => x.code === s.cur.code); if (st) { db.cur = st; db.role = s.role; return true; } } return false; } catch (e) { return false; } }
-    
+
     function saveData() { try { localStorage.setItem('ghaith_db_students', JSON.stringify(db.students)); } catch (e) { } }
     function loadData() { try { const d = JSON.parse(localStorage.getItem('ghaith_db_students')); if (d && d.length > 0) db.students = d; } catch (e) { } }
     loadData();
-  
-    initFirebase();
 
+    initFirebase();
 
     window.addEventListener('load', () => {
       if (loadSession()) {
@@ -317,18 +300,16 @@
       }
       updateCounts();
       updatePrices();
-      
+
     });
 
-    // ===== AUTH =====
     function showLogin(role) {
       const titles = { admin: 'دخول المدرس ', student: 'دخول الطالب ', parent: 'دخول ولي الأمر 👨‍👩‍👦' };
       document.getElementById('login-title').textContent = titles[role];
       let h = '';
       if (role === 'admin') {
-        h = `<div class="al al-b">المستخدم: <strong>admin</strong> — كلمة المرور: <strong>1234</strong></div>
-    <div class="fg"><label>المستخدم</label><input id="lu" value="admin"></div>
-    <div class="fg"><label>كلمة المرور</label><input id="lp" type="password" value="1234"></div>
+        h = `<div class="fg"><label>المستخدم</label><input id="lu"></div>
+    <div class="fg"><label>كلمة المرور</label><input id="lp" type="password"></div>
     <div class="fbtns"><button class="btn btn-r" style="width:100%" onclick="doLogin('admin')">دخول</button></div>`;
       } else if (role === 'student') {
         h = `<div class="fg"><label>كود الطالب (مثال: A-001)</label><input id="lc" placeholder="A-001 / B-001 / C-001"></div>
@@ -402,7 +383,6 @@
     function updateCounts() { ['first', 'second', 'third'].forEach(g => { const el = document.getElementById('cnt-' + g); if (el) el.textContent = db.students.filter(s => s.grade === g).length; }); }
     function updatePrices() { ['first', 'second', 'third'].forEach(g => { const el = document.getElementById('price-' + g); if (el) el.textContent = db.subPrices[g] + ' جنيه / شهرياً'; }); }
 
-    // ===== SUBSCRIBE =====
     function buySubscription(grade) {
       const price = db.subPrices[grade];
       const courseName = { 'first': 'الأول الثانوي', 'second': 'الثاني الثانوي', 'third': 'الثالث الثانوي' }[grade];
@@ -410,7 +390,6 @@
       window.open(`https://wa.me/201212897212?text=${msg}`, '_blank');
     }
 
-    // ===== BROADCAST & WARNINGS =====
     function sendWarning() {
       const msg = document.getElementById('warn-msg').value.trim();
       const to = document.getElementById('warn-to').value;
@@ -418,7 +397,7 @@
       const warn = { id: 'W' + (Date.now()), msg, to, date: new Date().toLocaleDateString('ar-EG'), time: new Date().toLocaleTimeString('ar-EG') };
       db.warnings.push(warn);
       db.students.filter(s => to === 'all' || s.grade === to).forEach(s => s.warnings.push(warn));
-      saveData(); // 
+      saveData();
       document.getElementById('warn-res').innerHTML = '<div class="al al-ok">✅ تم إرسال التحذير!</div>';
       setTimeout(() => closeM('warn-modal'), 2000);
     }
@@ -428,12 +407,11 @@
       const to = document.getElementById('bc-to').value;
       if (!subj || !body) { alert('أدخل الموضوع والرسالة'); return; }
       db.broadcasts.push({ id: 'BC' + (Date.now()), subj, body, to, date: new Date().toLocaleDateString('ar-EG') });
-      saveData(); // 
+      saveData();
       document.getElementById('bc-res').innerHTML = '<div class="al al-ok">✅ تم إرسال الرسالة للطلاب!</div>';
       setTimeout(() => closeM('broadcast-modal'), 2000);
     }
 
-    // ===== ADMIN TABS =====
     function aTab(t, el) {
       document.querySelectorAll('#admin-page .sb-item').forEach(n => n.classList.remove('active'));
       if (el) el.classList.add('active');
@@ -744,7 +722,6 @@
       setTimeout(() => { ['first', 'second', 'third'].forEach(g => { const sts = db.students.filter(s => s.grade === g); if (sts.length) buildBC('rc-' + g, sts.map(s => ({ l: s.name.split(' ')[0], v: s.grades.phy }))); }); }, 100);
     }
 
-    // ===== STUDENT TABS =====
     function sTab(t, el) {
       document.querySelectorAll('#student-page .sb-item').forEach(n => n.classList.remove('active')); if (el) el.classList.add('active');
       if (t === 'home') loadSHome(); else if (t === 'lessons') loadSLessons(); else if (t === 'pdfs') loadSPdfs(); else if (t === 'quizzes') loadSQuizzes(); else if (t === 'schedule') loadSSched(); else if (t === 'grades') loadSGrades(); else if (t === 'attend') loadSAtt(); else if (t === 'subscription') loadSSub();
@@ -934,7 +911,6 @@
   </div>`;
     }
 
-    // ===== PARENT TABS =====
     function pTab(t, el) {
       document.querySelectorAll('#parent-page .sb-item').forEach(n => n.classList.remove('active')); if (el) el.classList.add('active');
       if (t === 'home') loadPHome(); else if (t === 'attend') loadPAtt(); else if (t === 'grades') loadPGrades(); else if (t === 'schedule') loadPSched(); else if (t === 'reports') loadPReports();
@@ -1014,8 +990,6 @@
       setTimeout(() => buildBC('p-bc', [{ l: 'فيزياء', v: s.grades.phy }, { l: 'رياضيات', v: s.grades.math }, { l: 'كيمياء', v: s.grades.chem }, { l: 'أحياء', v: s.grades.bio }, { l: 'إنجليزي', v: s.grades.eng }]), 100);
     }
 
-
-    // ===== SCROLL PROGRESS =====
     window.addEventListener('scroll', () => {
       const el = document.getElementById('scroll-progress');
       if (el) { const p = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100; el.style.width = p + '%'; }
@@ -1041,7 +1015,6 @@
       if (b) b.disabled = histIdx <= 0; if (f) f.disabled = histIdx >= histStack.length - 1;
     }
 
-    // ===== NAV MOBILE MENU =====
     function toggleNavMenu() {
       const menu = document.getElementById('nav-mobile-menu');
       const overlay = document.getElementById('nav-mobile-overlay');
@@ -1121,7 +1094,6 @@
       if (activePage) toggleMobileSidebar(activePage.id);
     }
 
-    // ===== HERO PARTICLES =====
     (function () {
       const container = document.getElementById('hero-particles');
       if (!container) return;
@@ -1142,7 +1114,6 @@
       }
     })();
 
-    // ===== CHANGE PASSWORD =====
     let adminPass = '1234';
     function checkPassStrength(v) {
       const el = document.getElementById('pass-strength'); if (!el) return;
@@ -1176,8 +1147,6 @@
       }
     }
 
-
-    // ===== ADMIN PHOTO UPLOAD =====
     function adminPhotoUpload() {
       const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
       input.onchange = e => {
@@ -1185,7 +1154,7 @@
         const reader = new FileReader();
         reader.onload = ev => {
           const src = ev.target.result;
-          // Update all teacher photos on page
+
           document.querySelectorAll('#teacher-photo-main img,#hero-teacher-img,.current-photo img').forEach(img => img.src = src);
           localStorage.setItem('ghaith_teacher_photo', src);
           alert('✅ تم تحديث صورة المدرس!');
@@ -1194,7 +1163,7 @@
       };
       input.click();
     }
-    // Load saved photo on start
+
     window.addEventListener('load', () => {
       const saved = localStorage.getItem('ghaith_teacher_photo');
       if (saved) {
@@ -1205,7 +1174,6 @@
 
     });
 
-    // ===== UPDATE aTab to push history =====
     const _origATab = aTab;
     // aTab history tracking - non-breaking wrapper
     const _aTabOrig2 = aTab;
@@ -1248,17 +1216,15 @@
       }, 200);
     }
 
-    // ===== SECURITY SYSTEM =====
     const SEC = {
       loginAttempts: {},
       auditLog: JSON.parse(localStorage.getItem('ghaith_audit') || '[]'),
       blockedIPs: JSON.parse(localStorage.getItem('ghaith_blocked') || '[]'),
       sessionTokens: {},
       MAX_ATTEMPTS: 5,
-      LOCKOUT_TIME: 30, // seconds
-      SESSION_TIMEOUT: 60 * 60 * 1000, // 1 hour
+      LOCKOUT_TIME: 30,
+      SESSION_TIMEOUT: 60 * 60 * 1000,
 
-      // Log security event
       log(type, msg, level = 'ok') {
         const entry = {
           time: new Date().toLocaleTimeString('ar-EG'),
@@ -1271,7 +1237,6 @@
         try { localStorage.setItem('ghaith_audit', JSON.stringify(this.auditLog.slice(0, 200))); } catch (e) { }
       },
 
-      // Check rate limiting
       checkRateLimit(role) {
         const key = 'login_' + role;
         const now = Date.now();
@@ -1285,7 +1250,6 @@
         return true;
       },
 
-      // Record failed attempt
       recordFail(role) {
         const key = 'login_' + role;
         const now = Date.now();
@@ -1302,18 +1266,16 @@
         }
       },
 
-      // Record success
       recordSuccess(role) {
         const key = 'login_' + role;
         if (this.loginAttempts[key]) this.loginAttempts[key] = { count: 0, lastFail: 0, lockedUntil: 0 };
         this.log('LOGIN_OK', `دخول ناجح — ${role}`, 'ok');
-        // Generate session token
+
         const token = Math.random().toString(36).substr(2) + Date.now().toString(36);
         this.sessionTokens[role] = { token, created: Date.now() };
         localStorage.setItem('ghaith_session_token', token);
       },
 
-      // Show rate limit UI
       showRateLimitUI(seconds) {
         const overlay = document.getElementById('rate-limit-overlay');
         const countdown = document.getElementById('rate-limit-countdown');
@@ -1330,7 +1292,6 @@
         }, 1000);
       },
 
-      // XSS sanitize input
       sanitize(str) {
         if (!str) return '';
         return str.replace(/[<>'"&]/g, c => ({ '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;', '&': '&amp;' }[c]));
@@ -1636,5 +1597,3 @@
         if (r.top < window.innerHeight) el.classList.add('visible');
       });
     }, 200);
-
-  

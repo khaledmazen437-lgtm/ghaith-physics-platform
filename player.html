@@ -7,18 +7,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
-  
+
   <style>
     :root {
-  
-      --physics-teal: #1a4f5c; 
+
+      --physics-teal: #1a4f5c;
       --society-green: #bacb3f;
       --highlight-blue: #4a80d4;
       --player-bg: #ffffff;
       --player-text: #2d3748;
     }
 
-  
     .tech-background {
       background-color: #fdfdfd;
       background-image: radial-gradient(var(--physics-teal) 1px, transparent 1px), radial-gradient(var(--physics-teal) 1px, transparent 1px);
@@ -214,7 +213,7 @@
   </style>
 </head>
 <body class="tech-background">
-  
+
   <nav class="user-nav" style="background: #fff; box-shadow: 0 2px 15px rgba(0,0,0,0.05);">
     <div class="unav-right">
       <a href="dashboard.html" class="unav-logo" style="color: var(--physics-teal);">غ<span style="color: var(--society-green);">ي</span>ث</a>
@@ -228,20 +227,20 @@
   <div id="alert-msg" style="display: none; max-width: 1200px; margin: 20px auto 0; padding: 15px; background: #10b98120; border: 1px solid var(--society-green); color: var(--physics-teal); border-radius: 8px; text-align: center; font-weight: bold; font-family: 'Cairo';"></div>
 
   <div class="player-container">
-    
+
     <div class="video-wrapper">
       <div class="iframe-container" id="video-container">
         <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000; color: #fff; position: absolute; top:0;">
           جاري تحميل المشغل...
         </div>
       </div>
-      
+
       <div class="video-info">
         <h1 class="video-title" id="lesson-title">عنوان الدرس يظهر هنا</h1>
         <p class="video-desc" id="lesson-desc">
           وصف الدرس وملاحظات المستر هتظهر في المكان ده عشان الطالب يقرأها وهو بيتابع الفيديو.
         </p>
-        
+
         <div class="action-buttons">
           <button class="btn-complete" id="mark-complete-btn">
             <i class="fa-solid fa-check-circle"></i> جاري التحقق...
@@ -291,7 +290,7 @@
       <span style="color: var(--society-green); font-weight: bold;">Mohamed Zemitar</span>
     </div>
     <div style="font-family: 'Cairo', sans-serif; font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">
-      MHD Powered by 
+      MHD Powered by
     </div>
   </div>
 </footer>
@@ -309,8 +308,8 @@
     }
 
     const userId = user.uid;
-    
-    // سحب رقم الكورس من الرابط 
+
+    // سحب رقم الكورس من الرابط
     const urlParams = new URLSearchParams(window.location.search);
     const courseId = urlParams.get('id'); // عدلناها لـ id زي ما بتتبعت من صفحة الكورسات
 
@@ -320,7 +319,6 @@
       return;
     }
 
-    // 1. التأكد إن الطالب مشترك في الكورس ده (حماية المحتوى)
     firebase.database().ref(`enrolled_courses/${userId}/${courseId}`).once('value').then((snap) => {
       if (!snap.exists()) {
         alert("عفواً، يجب تفعيل هذا الكورس أولاً لمشاهدة محتواه.");
@@ -328,34 +326,30 @@
         return;
       }
 
-      // 2. بما إنه مشترك، نجيب بيانات الكورس ونعرضها
       loadCourseData(courseId, userId);
     });
   });
 
-  // دالة لجلب الفيديوهات وتشغيلها
   function loadCourseData(courseId, userId) {
     const db = firebase.database();
-    
-    // جلب اسم الكورس
+
     db.ref(`courses/${courseId}`).once('value').then((snap) => {
       if (snap.exists()) {
         document.getElementById('nav-course-name').innerText = snap.val().name;
       }
     });
 
-    // جلب قائمة الدروس
     db.ref(`courses/${courseId}/videos`).once('value').then((snap) => {
       const playlistContainer = document.getElementById('playlist-container');
-      
+
       if (snap.exists()) {
-        playlistContainer.innerHTML = ''; // تفريغ
+        playlistContainer.innerHTML = '';
         let isFirst = true;
 
         snap.forEach((childSnap) => {
           const video = childSnap.val();
           const videoKey = childSnap.key;
-          
+
           let ytId = '';
           if (video.url.includes('v=')) {
             ytId = video.url.split('v=')[1].split('&')[0];
@@ -393,14 +387,12 @@
     });
   }
 
-  // دالة تشغيل الفيديو وتحديث البيانات والمشاهدات
   function playVideo(ytId, title, desc, pdfUrl, videoKey, courseId, userId) {
-    // تحديث الـ iframe
+
     document.getElementById('video-container').innerHTML = `
       <iframe src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1" allowfullscreen></iframe>
     `;
 
-    // تحديث النصوص
     document.getElementById('lesson-title').innerText = title || 'عنوان الدرس';
     document.getElementById('lesson-desc').innerText = desc || 'لا يوجد وصف لهذا الدرس.';
 
@@ -413,17 +405,13 @@
       pdfBtn.style.display = 'none';
     }
 
-    // ==========================================
-    // نظام تسجيل المشاهدات الذكي
-    // ==========================================
     const completeBtn = document.getElementById('mark-complete-btn');
     const newBtn = completeBtn.cloneNode(true);
     completeBtn.parentNode.replaceChild(newBtn, completeBtn);
-    
-    // فحص هل الطالب شاهد الفيديو ده قبل كده؟
+
     firebase.database().ref(`video_views/${userId}/${videoKey}`).once('value').then(snap => {
       if(snap.exists()) {
-        // شافه قبل كده: نقفل الزرار ونغير شكله
+
         newBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> تمت المشاهدة مسبقاً';
         newBtn.style.background = '#e2e8f0';
         newBtn.style.color = '#718096';
@@ -435,15 +423,13 @@
         newBtn.style.color = 'var(--physics-teal)';
         newBtn.disabled = false;
 
-        // تفعيل الضغطة لتسجيل المشاهدة
         newBtn.addEventListener('click', function() {
           // تغيير شكل الزرار لحظة الضغط
           newBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التسجيل...';
           newBtn.disabled = true;
 
           const courseName = document.getElementById('nav-course-name').innerText;
-          
-          // الحفظ في قاعدة البيانات
+
           firebase.database().ref(`video_views/${userId}/${videoKey}`).set({
             videoId: videoKey,
             videoTitle: title,
@@ -456,8 +442,7 @@
             newBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> تم التسجيل ✔️';
             newBtn.style.background = '#e2e8f0';
             newBtn.style.color = '#718096';
-            
-            // إظهار رسالة منبثقة
+
             const alertBox = document.getElementById('alert-msg');
             alertBox.innerText = `تم تسجيل إتمامك لدرس: ${title} بنجاح!`;
             alertBox.style.display = 'block';
